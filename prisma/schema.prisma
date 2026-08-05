@@ -1,0 +1,368 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+   moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+
+
+model Opduser {
+  loginname                String    @id @db.VarChar(250)
+  name                     String?   @db.VarChar(250)
+  password                 String?   @db.VarChar(250)
+  passweb                  String?   @db.VarChar(250)
+  accessright              String?   @db.Text
+  department               String?   @db.VarChar(250)
+  departmentposition       String?   @db.VarChar(250)
+  entryposition            String?   @db.VarChar(250)
+  picture                  Bytes?    @db.LongBlob
+  startfullscreen          String?   @db.Char(1)
+  doctorcode               String?   @db.VarChar(15)
+  drug_access_level        Int?      @db.TinyInt
+  groupname                String?   @db.VarChar(250)
+  visible_menu             String?   @db.Text
+  viewallmenu              String?   @db.Char(1)
+  lab_staff                String?   @db.Char(1)
+  hospital_department_id   Int?
+  nhso_user                String?   @db.VarChar(250)
+  nhso_password            String?   @db.VarChar(250)
+  max_station              Int?
+  show_tip                 String?   @db.Char(1)
+  password_expire_date     DateTime? @db.Date
+  password_recheck_date    Int?
+  new_password_date        DateTime? @db.Date
+  check_lab_password       String?   @db.Char(1)
+  pcu_user                 String?   @db.Char(1)
+  account_disable          String?   @db.Char(1)
+  restrict_ward_access     String?   @db.Char(1)
+  real_staff               String?   @db.Char(1)
+  restrict_clinic_access   String?   @db.Char(1)
+  no_lab_result_display    String?   @db.Char(1)
+  no_doctor_consult_display String?  @db.Char(1)
+  no_announce_display      String?   @db.Char(1)
+  announce_read_count      Int?
+  xray_staff               String?   @db.Char(1)
+  hos_guid                 String?   @db.VarChar(38)
+  lab_check_password       String?   @db.Char(1)
+  cid                      String?   @db.VarChar(13)
+  hos_guid_ext             String?   @db.VarChar(64)
+  auto_logout_minute       Int?
+  iclaim_jwt               String?   @db.Text
+  moph_acc_user            String?   @db.VarChar(50)
+  moph_acc_password        String?   @db.VarChar(250)
+  send_moph_otp            String?   @db.Char(1)
+
+  @@index([department], map: "department")
+  @@index([groupname], map: "groupname")
+  @@index([name], map: "name")
+  @@index([password], map: "password")
+  @@index([hos_guid], map: "ix_hos_guid")
+  @@index([cid], map: "ix_cid")
+  @@index([hos_guid_ext], map: "ix_hos_guid_ext")
+  @@index([doctorcode], map: "ix_doctorcode")
+  @@map("opduser")
+}
+
+
+model drugitems {
+  icode                          String    @id @db.VarChar(7)
+  name                           String?   @db.VarChar(100)
+  strength                       String?   @db.VarChar(50)
+  units                          String?   @db.VarChar(50)
+  unitprice                      Float?    @db.Double
+  dosageform                     String?   @db.VarChar(100)
+  criticalpriority               Int?
+  drugaccount                    String?   @db.VarChar(2)
+  drugcategory                   String?   @db.VarChar(150)
+  drugnote                       String?   @db.VarChar(150)
+  hintcode                       String?   @db.VarChar(4)
+  istatus                        String?   @db.Char(1)
+  lastupdatestdprice             DateTime? @db.DateTime(0)
+  lockprice                      String?   @db.Char(1)
+  lockprint                      String?   @db.Char(1)
+  maxlevel                       Int?
+  minlevel                       Int?
+  maxunitperdose                 Int?
+  packqty                        Int?
+  reorderqty                     Int?
+  stdprice                       Float?    @db.Double
+  stdtaken                       String?   @db.VarChar(30)
+  therapeutic                    String?   @db.VarChar(150)
+  therapeuticgroup                String?   @db.VarChar(150)
+  default_qty                    Int?
+  gpo_code                       String?   @db.VarChar(7)
+  use_right                      String?   @db.Char(1)
+  i_type                         String?   @db.Char(1)
+  drugusage                      String?   @db.VarChar(30)
+  high_cost                      String?   @db.Char(1)
+  must_paid                      String?   @db.Char(1)
+  alert_level                    Int?      @db.TinyInt
+  access_level                   Int?      @db.TinyInt
+  sticker_short_name              String?   @db.VarChar(150)
+  paidst                         String?   @db.Char(2)
+  antibiotic                     String?   @db.Char(1)
+  displaycolor                   Int?
+  empty                          String?   @db.Char(1)
+  empty_text                     String?   @db.Text
+  unitcost                       Float?    @db.Double
+  gfmiscode                      String?   @db.VarChar(14)
+  ipd_price                      Float?    @db.Double
+  oldcode                        String?   @db.VarChar(20)
+  habit_forming                  String?   @db.Char(1)
+  did                            String?   @db.VarChar(27)
+  stock_type                     String?   @db.VarChar(4)
+  price2                         Float?    @db.Double
+  price3                         Float?    @db.Double
+  ipd_price2                     Float?    @db.Double
+  ipd_price3                     Float?    @db.Double
+  price_lock                     String?   @db.Char(1)
+  pregnancy                      String?   @db.VarChar(10)
+  pharmacology_group1             Int?
+  pharmacology_group2             Int?
+  pharmacology_group3             Int?
+  generic_name                   String?   @db.VarChar(250)
+  show_pregnancy_alert            String?   @db.Char(1)
+  icode_guid                     String?   @db.VarChar(38)
+  na                             String?   @db.Char(1)
+  invcode                        String?   @db.VarChar(10)
+  check_user_group                String?   @db.Char(1)
+  check_user_name                 String?   @db.Char(1)
+  show_notify                    String?   @db.Char(1)
+  show_notify_text                String?   @db.Text
+  income                         String?   @db.Char(2)
+  print_sticker_pq                 String?   @db.Char(1)
+  charge_service_opd               String?   @db.Char(1)
+  charge_service_ipd               String?   @db.Char(1)
+  ename                           String?   @db.VarChar(150)
+  dose_type                      String?   @db.Char(3)
+  habit_forming_type              Int?
+  no_discount                    String?   @db.Char(1)
+  therapeutic_eng                 String?   @db.VarChar(200)
+  hintcode_eng                    String?   @db.VarChar(200)
+  limit_drugusage                 String?   @db.Char(1)
+  print_sticker_header             String?   @db.Char(1)
+  calc_idr_qty                    String?   @db.Char(1)
+  item_in_hospital                String?   @db.Char(1)
+  no_substock                    String?   @db.Char(1)
+  volume_cc                      Int?
+  usage_code                     String?   @db.VarChar(10)
+  frequency_code                  String?   @db.VarChar(10)
+  time_code                      String?   @db.VarChar(10)
+  dispense_dose                   Float?    @db.Double
+  usage_unit_code                 String?   @db.VarChar(10)
+  dose_per_units                  Float?    @db.Double
+  ipd_default_pay                 Int?
+  billcode                       String?   @db.VarChar(10)
+  billnumber                     String?   @db.VarChar(15)
+  lockprint_ipd                   String?   @db.Char(1)
+  pregnancy_notify_text            String?   @db.Text
+  show_breast_feeding_alert        String?   @db.Char(1)
+  breast_feeding_alert_text        String?   @db.Text
+  show_child_notify               String?   @db.Char(1)
+  child_notify_text               String?   @db.Text
+  child_notify_min_age             Int?
+  child_notify_max_age             Int?
+  continuous                     String?   @db.Char(1)
+  substitute_icode                String?   @db.Char(7)
+  trade_name                     String?   @db.VarChar(200)
+  use_right_allow                 String?   @db.Char(1)
+  medication_machine_id            Int?
+  ipd_medication_machine_id        Int?
+  check_remed_qty                 String?   @db.Char(1)
+  addict                         String?   @db.Char(1)
+  addict_type_id                  Int?
+  medication_machine_opd_no        Int?
+  medication_machine_ipd_no        Int?
+  fp_drug                        String?   @db.Char(1)
+  usage_code_ipd                  String?   @db.VarChar(10)
+  dispense_dose_ipd                Float?    @db.Double
+  usage_unit_code_ipd              String?   @db.VarChar(10)
+  frequency_code_ipd               String?   @db.VarChar(10)
+  time_code_ipd                   String?   @db.VarChar(10)
+  print_ipd_injection_sticker      String?   @db.Char(1)
+  provis_medication_unit_code      String?   @db.VarChar(10)
+  hos_guid                       String?   @db.VarChar(38)
+  sks_product_category_id          Int?
+  sks_clain_control_type_id        Int?
+  sks_drug_code                   String?   @db.VarChar(25)
+  sks_dfs_code                    String?   @db.VarChar(50)
+  sks_dfs_text                    String?   @db.VarChar(150)
+  sks_reimb_price                 Float?    @db.Double
+  hos_guid_ext                    String?   @db.VarChar(64)
+  check_druginteraction_history    String?   @db.Char(1)
+  check_druginteraction_history_day Int?
+  nhso_adp_type_id                 Int?
+  nhso_adp_code                   String?   @db.VarChar(15)
+  sks_claim_control_type_id        Int?
+  begin_date                     DateTime? @db.Date
+  finish_date                    DateTime? @db.Date
+  name_pr                        String?   @db.VarChar(100)
+  name_eng                       String?   @db.VarChar(100)
+  capacity_name                   String?   @db.VarChar(100)
+  finish_reason                   String?   @db.VarChar(100)
+  extra_unitcost                  Float?    @db.Double
+  drug_control_type_id             Int?
+  name_print                     String?   @db.VarChar(100)
+  active_ingredient_mg             Float?    @db.Double
+  no_order_g6pd                   String?   @db.Char(1)
+  gender_check                    String?   @db.Char(1)
+  no_order_gender                 String?   @db.Char(1)
+  max_qty                        Int?
+  prefer_opd_usage_code            String?   @db.Char(1)
+  capacity_qty                    Float?    @db.Double
+  need_order_reason               String?   @db.Char(1)
+  drugitems_due_type_id             Int?
+  drugeval_head_id                Int?
+  light_protect                   String?   @db.Char(1)
+  tpu_code_list                   String?   @db.VarChar(200)
+  inv_map_update                  String?   @db.Char(1)
+  special_advice_text              String?   @db.Text
+  precaution_advice_text           String?   @db.Text
+  contra_advice_text               String?   @db.Text
+  storage_advice_text              String?   @db.Text
+  qr_code_url                     String?   @db.VarChar(200)
+  vat_percent                     Float?    @db.Double
+  acc_regist                     String?   @db.Char(1)
+  use_paidst                     String?   @db.Char(1)
+  thai_name                      String?   @db.VarChar(200)
+  fwf_item_id                     Int?
+  drugitems_em1_id                 Int?
+  drugitems_em2_id                 Int?
+  drugitems_em3_id                 Int?
+  drugitems_em4_id                 Int?
+  tmt_tp_code                     String?   @db.VarChar(10)
+  tmt_gp_code                     String?   @db.VarChar(10)
+  limit_pttype                    String?   @db.Char(1)
+  noshow_narcotic                 String?   @db.Char(1)
+  medication_machine_flag          String?   @db.Char(1)
+  sks_price                      Float?    @db.Double
+  print_sticker_by_frequency        String?   @db.Char(1)
+  print_sticker_pq_ipd             String?   @db.Char(1)
+  sub_income                      String?   @db.VarChar(3)
+  prefer_ipd_usage_code            String?   @db.Char(1)
+  default_qty_ipd                  Int?
+  max_qty_ipd                     Int?
+  drugusage_ipd                   String?   @db.VarChar(30)
+  no_popup_ipd_reason              String?   @db.Char(1)
+  specprep                       String?   @db.VarChar(10)
+  med_dose_calc_type_id             Int?
+  send_line_notify                String?   @db.Char(1)
+  show_qrcode_trade                String?   @db.Char(1)
+  warn_g6pd                      String?   @db.Char(1)
+  ipd_rx_freq_day                  Int?
+  displaycolor_focus               Int?
+  last_update                     DateTime? @db.DateTime(0)
+  no_remed                       String?   @db.Char(1)
+  force_round_qty                 String?   @db.Char(1)
+  atc_code                        String?   @db.VarChar(10)
+  state_item_id                    Int?
+  multiply_charge_service           String?   @db.Char(1)
+  csmbs_claim_cat                  String?   @db.Char(1)
+  simb_2005                       String?   @db.VarChar(10)
+  sks_rev_date                    DateTime? @db.Date
+  sct_unit_code                   String?   @db.VarChar(20)
+  print_label                     String?   @db.Char(1)
+  need_presc_duration              String?   @db.Char(1)
+  ttmt_code                       String?   @db.VarChar(10)
+  h1                             String?   @db.VarChar(10)
+  h2                             String?   @db.VarChar(10)
+
+  @@index([dosageform])
+  @@index([drugaccount])
+  @@index([drugcategory])
+  @@index([drugnote])
+  @@index([hintcode])
+  @@index([istatus])
+  @@index([name])
+  @@index([packqty])
+  @@index([strength])
+  @@index([therapeutic])
+  @@index([therapeuticgroup])
+  @@index([units])
+  @@index([oldcode], map: "ix_oldcode")
+  @@index([income], map: "ix_ix_income")
+  @@index([no_discount], map: "ix_no_discount")
+  @@index([generic_name], map: "ix_generic_name")
+  @@index([show_child_notify], map: "ix_show_child_notify")
+  @@index([icode_guid], map: "ix_icode_guid")
+  @@index([hos_guid_ext], map: "ix_hos_guid_ext")
+  @@index([check_druginteraction_history], map: "ix_cdh")
+}
+
+
+
+
+model opitemrece {
+  hos_guid                    String    @id @db.VarChar(38)
+  vn                          String?   @db.VarChar(13)
+  hn                          String?   @db.VarChar(9)
+  an                          String?   @db.VarChar(9)
+  icode                       String?   @db.VarChar(7)
+  qty                         Int?
+  drugusage                   String?   @db.VarChar(7)
+  idr                         String?   @db.VarChar(30)
+  iperday                     Int?
+  iperdose                    Float?    @db.Double
+  recetime                    DateTime? @db.Time(0)
+  unitprice                   Float?    @db.Double
+  vstdate                     DateTime? @db.Date
+  vsttime                     DateTime? @db.Time(0)
+  doctor                      String?   @db.VarChar(10)
+  rxdate                      DateTime? @db.Date
+  rxtime                      DateTime? @db.Time(0)
+  sp_use                      String?   @db.VarChar(7)
+  hcode                       String?   @db.VarChar(5)
+  print                       String?   @db.Char(1)
+  dep_code                    String?   @db.Char(3)
+  finance_number               String?   @db.VarChar(7)
+  discount                    Float?    @db.Double
+  use_right                   String?   @db.Char(1)
+  node_id                     String?   @db.Char(1)
+  order_no                    Int?
+  sub_type                    String?   @db.Char(1)
+  pttype                      String?   @db.Char(2)
+  income                      String?   @db.Char(2)
+  remain                      String?   @db.Char(1)
+  item_type                   String?   @db.Char(1)
+  staff                       String?   @db.VarChar(25)
+  doctor_lock                  String?   @db.Char(1)
+  paidst                      String?   @db.Char(2)
+  item_no                     Int?      @db.TinyInt
+  last_modified                 DateTime? @db.DateTime(0)
+  sum_price                    Float?    @db.Double
+  cost                         Float?    @db.Double
+  stock_department_id           Int?
+  command_doctor                String?   @db.VarChar(10)
+  opi_doctor_finance_type_id     Int?
+
+  @@index([an], map: "ix_an")
+  @@index([doctor], map: "ix_doctor")
+  @@index([drugusage], map: "ix_drugusage")
+  @@index([finance_number], map: "ix_finance_number")
+  @@index([hcode], map: "ix_hcode")
+  @@index([hn], map: "ix_hn")
+  @@index([icode], map: "ix_icode")
+  @@index([item_type], map: "ix_item_type")
+  @@index([an, rxdate, icode], map: "ix_an_rxdate_icode")
+  @@index([pttype], map: "ix_pttype")
+  @@index([rxdate], map: "ix_rxdate")
+  @@index([sub_type], map: "ix_sub_type")
+  @@index([vn], map: "ix_vn")
+  @@index([vstdate], map: "ix_vstdate")
+  @@index([an, icode, rxdate], map: "ix_an_rxdate_icode_index")
+  @@index([an, order_no], map: "ix_an_order_no")
+}
