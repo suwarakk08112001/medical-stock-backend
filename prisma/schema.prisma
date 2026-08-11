@@ -283,9 +283,10 @@ model drugitems {
 
 
   totaldrugitems                 totaldrugitem[]   // <-- เพิ่มบรรทัดนี้ (opposite relation)
-  transactionIn                  TransactionIn[]
-  TransactionOut                 TransactionOut[]
-  Rollback                       Rollback[]
+  inventorys                     inventory[]
+  transaction_stock_in           transaction_stock_in[]
+  Transaction_stock_out          transaction_stock_out[]
+
 
    @@unique([icode, invcode])
 
@@ -379,27 +380,29 @@ model totaldrugitem{
   id            Int         @id @default(autoincrement())
   icode         String?     @db.VarChar(7)
   invcode       String?     @db.VarChar(10)
+  mpack         Int
+  unit          String?
   qty           Int
   drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
-  @@index([icode, invcode])
+  @@index([icode, invcode], name: "icode_invcode")
 }
 
-model TransactionIn{
+model transaction_stock_in{
   id            Int         @id @default(autoincrement())
   receivedate   DateTime    @db.Date
   icode         String?     @db.VarChar(7)
   invcode       String?     @db.VarChar(10)
-  qty           Int
+  remain        Int
   unitprice     Float?      @db.Double
   sum_price     Float?      @db.Double
   yearmonth     String?     @db.VarChar(7)
 
   drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
-  @@index([icode, invcode])
+  @@index([icode, invcode], name: "icode_invcode")
 }
 
 
-model TransactionOut{
+model transaction_stock_out{
   id            Int         @id @default(autoincrement())
   senderdate    DateTime    @db.Date
   icode         String?     @db.VarChar(7)
@@ -410,31 +413,22 @@ model TransactionOut{
   yearmonth     String?     @db.VarChar(7)
   vn            String?     @db.VarChar(13)
   hn            String?     @db.VarChar(9)
-
+  
   drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
-  @@index([icode, invcode])
+  @@index([icode, invcode], name: "icode_invcode")
 }
 
-
-enum Deposittype{
-  stock_in
-  stock_out
-}
-
-model Rollback{
+model inventory{
   id            Int         @id @default(autoincrement())
-  receivedate   DateTime?    @db.Date
-  senderdate    DateTime?    @db.Date
   icode         String?     @db.VarChar(7)
   invcode       String?     @db.VarChar(10)
-  qty           Int
-  unitprice     Float?      @db.Double
-  sum_price     Float?      @db.Double
+  mpack         Int
+  unit          String?
+  ttr           Int
+  bal_value     Float
   yearmonth     String?     @db.VarChar(7)
-  vn            String?     @db.VarChar(13)
-  hn            String?     @db.VarChar(9)
-  deposittype   Deposittype
-
   drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
-  @@index([icode, invcode])
+  @@index([icode, invcode], name: "icode_invcode")
 }
+
+

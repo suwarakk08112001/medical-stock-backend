@@ -17,11 +17,7 @@ export class DashboardService {
   }
 
   async findTotalDrug(){
-    const total_drug_items = await this.prisma.drugitems.count({
-      where: {
-        invcode: { not: null }
-      }
-    });
+    const total_drug_items = await this.prisma.totaldrugitem.count();
     return { total_drug_items };
   }
 

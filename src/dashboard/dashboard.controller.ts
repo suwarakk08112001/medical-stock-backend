@@ -17,7 +17,6 @@ export class DashboardController {
     return this.dashboardService.findTotalDrug()
   }
 
-
   @Get()
   findAll() {
     return this.dashboardService.findAll();
