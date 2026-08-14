@@ -282,10 +282,11 @@ model drugitems {
   h2                             String?   @db.VarChar(10)
 
 
-  totaldrugitems                 totaldrugitem[]   // <-- เพิ่มบรรทัดนี้ (opposite relation)
-  inventorys                     inventory[]
-  transaction_stock_in           transaction_stock_in[]
-  Transaction_stock_out          transaction_stock_out[]
+  drugitemcode                   drugitemcode[]   // <-- เพิ่มบรรทัดนี้ (opposite relation)
+  balance                        balance[]
+  carrydrugitem                  carrydrugitem[]
+  importdrugitem                 importdrugitem[]
+  exportdrugitem                 exportdrugitem[]
 
 
    @@unique([icode, invcode])
@@ -376,49 +377,59 @@ model opitemrece {
   @@index([an, order_no], map: "ix_an_order_no")
 }
 
-model totaldrugitem{
+model drugitemcode{
   id            Int         @id @default(autoincrement())
   icode         String?     @db.VarChar(7)
   invcode       String?     @db.VarChar(10)
   mpack         Int
   unit          String?
-  qty           Int
-  drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
-  @@index([icode, invcode], name: "icode_invcode")
-}
-
-model transaction_stock_in{
-  id            Int         @id @default(autoincrement())
-  receivedate   DateTime    @db.Date
-  icode         String?     @db.VarChar(7)
-  invcode       String?     @db.VarChar(10)
-  remain        Int
-  unitprice     Float?      @db.Double
-  sum_price     Float?      @db.Double
-  yearmonth     String?     @db.VarChar(7)
-
-  drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
-  @@index([icode, invcode], name: "icode_invcode")
-}
-
-
-model transaction_stock_out{
-  id            Int         @id @default(autoincrement())
-  senderdate    DateTime    @db.Date
-  icode         String?     @db.VarChar(7)
-  invcode       String?     @db.VarChar(10)
-  qty           Int
-  unitprice     Float?      @db.Double
-  sum_price     Float?      @db.Double
-  yearmonth     String?     @db.VarChar(7)
-  vn            String?     @db.VarChar(13)
-  hn            String?     @db.VarChar(9)
   
   drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
   @@index([icode, invcode], name: "icode_invcode")
 }
 
-model inventory{
+model carrydrugitem{
+  id            Int         @id @default(autoincrement())
+  icode         String?     @db.VarChar(7)
+  invcode       String?     @db.VarChar(10)
+  mpack         Int
+  unit          String?
+  tremain            Int
+  remainvalue        Float?      @db.Double
+  yearmonth     String?     @db.VarChar(7)
+  drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
+  @@index([icode, invcode], name: "icode_invcode")
+}
+
+model importdrugitem{
+  id            Int         @id @default(autoincrement())
+  icode         String?     @db.VarChar(7)
+  invcode       String?     @db.VarChar(10)
+  mpack         Int
+  unit          String?
+  tr            Int
+  rvalue        Float?      @db.Double
+  yearmonth     String?     @db.VarChar(7)
+  drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
+  @@index([icode, invcode], name: "icode_invcode")
+}
+
+
+model exportdrugitem{
+  id            Int         @id @default(autoincrement())
+  icode         String?     @db.VarChar(7)
+  invcode       String?     @db.VarChar(10)
+  mpack         Int
+  unit          String?
+  td            Int
+  dvalue        Float?      @db.Double
+  yearmonth     String?     @db.VarChar(7)
+  drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
+  @@index([icode, invcode], name: "icode_invcode")
+}
+
+
+model balance{
   id            Int         @id @default(autoincrement())
   icode         String?     @db.VarChar(7)
   invcode       String?     @db.VarChar(10)

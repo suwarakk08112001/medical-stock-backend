@@ -1,0 +1,58 @@
+SELECT
+    t.id,
+    t.icode,
+    t.invcode,
+    t.mpack,
+    t.unit,
+
+    COALESCE(c.tremain, 0) AS tremain,
+    COALESCE(c.remainvalue, 0) AS remainvalue,
+
+    COALESCE(i.tr, 0) AS tr,
+    COALESCE(i.rvalue, 0) AS rvalue,
+
+    COALESCE(e.td, 0) AS td,
+    COALESCE(e.dvalue, 0) AS dvalue,
+
+    COALESCE(b.ttr, 0) AS ttr,
+    COALESCE(b.bal_value, 0) AS bal_value,
+    b.yearmonth
+
+FROM totaldrugitem t
+
+LEFT JOIN (
+    SELECT
+        icode,
+        SUM(tremain) AS tremain,
+        SUM(remainvalue) AS remainvalue
+    FROM carrydrugitem
+    GROUP BY icode
+) c ON c.icode = t.icode
+
+LEFT JOIN (
+    SELECT
+        icode,
+        SUM(tr) AS tr,
+        SUM(rvalue) AS rvalue
+    FROM importdrugitem
+    GROUP BY icode
+) i ON i.icode = t.icode
+
+LEFT JOIN (
+    SELECT
+        icode,
+        SUM(td) AS td,
+        SUM(dvalue) AS dvalue
+    FROM exportdrugitem
+    GROUP BY icode
+) e ON e.icode = t.icode
+
+LEFT JOIN (
+    SELECT
+        icode,
+        yearmonth,
+        SUM(ttr) AS ttr,
+        SUM(bal_value) AS bal_value
+    FROM balance
+    GROUP BY icode, yearmonth
+) b ON b.icode = t.icode;

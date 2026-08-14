@@ -1,7 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Query,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { CreateDashboardDto } from './dto/create-dashboard.dto';
 import { UpdateDashboardDto } from './dto/update-dashboard.dto';
+import { SearchDashboardDto } from './dto/search-dashboard.dto';
 
 @Controller('dashboard')
 export class DashboardController {
@@ -13,8 +23,23 @@ export class DashboardController {
   }
 
   @Get('totalDrug')
-  findTotalDrug(){
-    return this.dashboardService.findTotalDrug()
+  findTotalDrug() {
+    return this.dashboardService.findTotalDrug();
+  }
+
+  @Get('tbvalue')
+  findTotalBValue() {
+    return this.dashboardService.findTotalBvalue();
+  }
+
+  @Get('TopTenttr')
+  findTopTenTTR(@Query() dto: SearchDashboardDto) {
+    return this.dashboardService.findTopTenTTR(dto);
+  }
+
+  @Get('TopTentr')
+  findTopTenTR(@Query() dto:SearchDashboardDto){
+    return this.dashboardService.findTopTenTR(dto);
   }
 
   @Get()
@@ -28,7 +53,10 @@ export class DashboardController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDashboardDto: UpdateDashboardDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateDashboardDto: UpdateDashboardDto,
+  ) {
     return this.dashboardService.update(+id, updateDashboardDto);
   }
 

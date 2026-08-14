@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors,UploadedFile} from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseInterceptors,
+  UploadedFile,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ImportItemsService } from './import-items.service';
-import { CreateImportItemDto } from './dto/create-import-item.dto';
 import { UpdateImportItemDto } from './dto/update-import-item.dto';
 
 @Controller('import')
@@ -25,7 +34,10 @@ export class ImportItemsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateImportItemDto: UpdateImportItemDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateImportItemDto: UpdateImportItemDto,
+  ) {
     return this.importItemsService.update(+id, updateImportItemDto);
   }
 

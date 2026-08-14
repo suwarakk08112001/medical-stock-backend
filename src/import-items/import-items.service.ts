@@ -27,51 +27,91 @@ export class ImportItemsService {
     const skipped: { row: number; reason: string; data: any }[] = [];
     let totaldrugitemInsertedCount = 0;
     let totaldrugitemUpdatedCount = 0;
-    let inventoryInsertedCount = 0;
-    let inventoryUpdatedCount = 0;
+    let balanceInsertedCount = 0;
+    let balanceUpdatedCount = 0;
+    let carrydrugitemInsertedCount = 0;
+    let carrydrugitemUpdatedCount = 0;
+    let importdrugitemInsertedCount = 0;
+    let importdrugitemUpdatedCount = 0;
+    let exportdrugitemInsertedCount = 0;
+    let exportdrugitemUpdatedCount = 0;
 
     for (let index = 0; index < rows.length; index++) {
       const row = rows[index];
       const rowNo = index + 2;
 
       const invcodeRaw = row['CODE1'];
-      const qtyRaw = row['TTR'];
       const mpackRaw = row['MPack'];
       const unitRaw = row['Unit'];
+      const tremainRaw = row['TRemaine'];
+      const remainvalueRaw = row['RemaineValue'];
+      const trRaw = row['TR'];
+      const rvalueRaw = row['RValue'];
+      const tdRaw = row['TD'];
+      const dvalueRaw = row['DValue'];
+      const qtyRaw = row['TTR'];
       const balvalueRaw = row['BalValue'];
       const yearmonthRaw = row['YearMonth'];
 
       const invcode = invcodeRaw != null ? String(invcodeRaw).trim() : null;
-      const qty = qtyRaw != null ? Number(qtyRaw) : NaN;
       const mpack = mpackRaw != null ? Number(mpackRaw) : NaN;
-      const balvalue = balvalueRaw != null ? Number(balvalueRaw) : NaN;
       const unit = unitRaw != null ? String(unitRaw).trim() : null;
-      const yearmonth = yearmonthRaw != null ? String(yearmonthRaw).trim() : null;
+      const tremain = tremainRaw != null ? Number(tremainRaw) : NaN;
+      const remainvalue = remainvalueRaw != null ? Number(remainvalueRaw) : NaN;
+      const tr = trRaw != null ? Number(trRaw) : NaN;
+      const rvalue = rvalueRaw != null ? Number(rvalueRaw) : NaN;
+      const td = tdRaw != null ? Number(tdRaw) : NaN;
+      const dvalue = dvalueRaw != null ? Number(dvalueRaw) : NaN;
+      const qty = qtyRaw != null ? Number(qtyRaw) : NaN;
+      const balvalue = balvalueRaw != null ? Number(balvalueRaw) : NaN;
+
+      const yearmonth =
+        yearmonthRaw != null ? String(yearmonthRaw).trim() : null;
 
       if (!invcode) {
         skipped.push({ row: rowNo, reason: 'CODE1 ว่าง', data: row });
         continue;
       }
-      if (Number.isNaN(qty)) {
-        skipped.push({ row: rowNo, reason: 'TTR ไม่ใช่ตัวเลข', data: row });
-        continue;
-      }
+
       if (Number.isNaN(mpack)) {
         skipped.push({ row: rowNo, reason: 'MPack ไม่ใช่ตัวเลข', data: row });
         continue;
       }
-     
-      if (!yearmonth) {
-        skipped.push({ row: rowNo, reason: 'YearMonth ว่าง', data: row });
+      if (Number.isNaN(tr)) {
+        skipped.push({ row: rowNo, reason: 'tr ไม่ใช่ตัวเลข', data: row });
+        continue;
+      }
+
+      if (Number.isNaN(rvalue)) {
+        skipped.push({ row: rowNo, reason: 'rvalue ไม่ใช่ตัวเลข', data: row });
+        continue;
+      }
+
+      if (Number.isNaN(qty)) {
+        skipped.push({ row: rowNo, reason: 'TTR ไม่ใช่ตัวเลข', data: row });
         continue;
       }
       if (Number.isNaN(balvalue)) {
-        skipped.push({ row: rowNo, reason: 'BalValue ไม่ใช่ตัวเลข', data: row });
+        skipped.push({
+          row: rowNo,
+          reason: 'BalValue ไม่ใช่ตัวเลข',
+          data: row,
+        });
+        continue;
+      }
+      if (!yearmonth) {
+        skipped.push({ row: rowNo, reason: 'YearMonth ว่าง', data: row });
         continue;
       }
 
       // ใช้ qty ที่ validate แล้ว (ไม่ใช่ qtyRaw ดิบ) ในการคำนวณ
       const tqty = qty * mpack;
+
+      const total_tr = tr * mpack;
+
+      const total_td = td * mpack;
+
+      const total_tremain = tremain * mpack;
 
       try {
         // 1) หา icode จาก invcode ในตาราง drugitems
@@ -92,32 +132,125 @@ export class ImportItemsService {
         const { icode } = drugitem;
 
         // 2) เช็คว่ามี icode + invcode นี้ใน totaldrugitem แล้วหรือยัง
-        const existing = await this.prisma.totaldrugitem.findFirst({
+        const existingdrugitemcode = await this.prisma.drugitemcode.findFirst({
           where: { icode, invcode },
         });
 
-        if (existing) {
-          await this.prisma.totaldrugitem.update({
-            where: { id: existing.id },
-            data: { qty: tqty, mpack, unit:String(unit) },
+        if (existingdrugitemcode) {
+          await this.prisma.drugitemcode.update({
+            where: { id: existingdrugitemcode.id },
+            data: { mpack, unit: String(unit) },
           });
           totaldrugitemUpdatedCount++;
         } else {
-          await this.prisma.totaldrugitem.create({
-            data: { icode, invcode, qty: tqty, mpack,unit:String(unit) },
+          await this.prisma.drugitemcode.create({
+            data: { icode, invcode, mpack, unit: String(unit) },
           });
           totaldrugitemInsertedCount++;
         }
 
+        const existingcarrytotaldrug =
+          await this.prisma.carrydrugitem.findFirst({
+            where: { icode, invcode, yearmonth },
+          });
+
+        if (existingcarrytotaldrug) {
+          await this.prisma.carrydrugitem.update({
+            where: { id: existingcarrytotaldrug.id },
+            data: {
+              mpack,
+              unit,
+              tremain: total_tremain,
+              remainvalue,
+            },
+          });
+          carrydrugitemUpdatedCount++;
+        } else {
+          await this.prisma.carrydrugitem.create({
+            data: {
+              icode,
+              invcode,
+              mpack,
+              unit,
+              tremain: total_tremain,
+              remainvalue,
+              yearmonth,
+            },
+          });
+          carrydrugitemInsertedCount++;
+        }
+
+        const existingimporttotaldrug =
+          await this.prisma.importdrugitem.findFirst({
+            where: { icode, invcode, yearmonth },
+          });
+
+        if (existingimporttotaldrug) {
+          await this.prisma.importdrugitem.update({
+            where: { id: existingimporttotaldrug.id },
+            data: {
+              mpack,
+              unit,
+              tr: total_tr,
+              rvalue,
+            },
+          });
+          importdrugitemUpdatedCount++;
+        } else {
+          await this.prisma.importdrugitem.create({
+            data: {
+              icode,
+              invcode,
+              mpack,
+              unit,
+              tr: total_tr,
+              rvalue,
+              yearmonth,
+            },
+          });
+          importdrugitemInsertedCount++;
+        }
+
+        const existingexporttotaldrug =
+          await this.prisma.exportdrugitem.findFirst({
+            where: { icode, invcode, yearmonth },
+          });
+
+        if (existingexporttotaldrug) {
+          await this.prisma.exportdrugitem.update({
+            where: { id: existingexporttotaldrug.id },
+            data: {
+              mpack,
+              unit,
+              td: total_td,
+              dvalue,
+            },
+          });
+          exportdrugitemUpdatedCount++;
+        } else {
+          await this.prisma.exportdrugitem.create({
+            data: {
+              icode,
+              invcode,
+              mpack,
+              unit,
+              td: total_td,
+              dvalue,
+              yearmonth,
+            },
+          });
+          exportdrugitemUpdatedCount++;
+        }
+
         // 3) หา record ของ inventory แยกต่างหาก ด้วย icode + invcode + yearmonth
         // (ห้ามใช้ existing.id จากขั้นตอนที่ 2 เพราะเป็น id ของ totaldrugitem คนละตารางกัน)
-        const existingInventory = await this.prisma.inventory.findFirst({
+        const existingbalance = await this.prisma.balance.findFirst({
           where: { icode, invcode, yearmonth },
         });
 
-        if (existingInventory) {
-          await this.prisma.inventory.update({
-            where: { id: existingInventory.id },
+        if (existingbalance) {
+          await this.prisma.balance.update({
+            where: { id: existingbalance.id },
             data: {
               ttr: tqty,
               mpack,
@@ -125,9 +258,9 @@ export class ImportItemsService {
               bal_value: balvalue,
             },
           });
-          inventoryUpdatedCount++;
+          balanceUpdatedCount++;
         } else {
-          await this.prisma.inventory.create({
+          await this.prisma.balance.create({
             data: {
               icode,
               invcode,
@@ -138,7 +271,7 @@ export class ImportItemsService {
               yearmonth,
             },
           });
-          inventoryInsertedCount++;
+          balanceInsertedCount++;
         }
       } catch (err) {
         // กันไม่ให้แถวเดียวพังทั้งไฟล์ + บันทึกเหตุผลไว้ตรวจสอบ
@@ -154,8 +287,14 @@ export class ImportItemsService {
       totalRows: rows.length,
       totaldrugitemInsertedCount,
       totaldrugitemUpdatedCount,
-      inventoryInsertedCount,
-      inventoryUpdatedCount,
+      carrydrugitemUpdatedCount,
+      carrydrugitemInsertedCount,
+      importdrugitemInsertedCount,
+      importdrugitemUpdatedCount,
+      exportdrugitemUpdatedCount,
+      exportdrugitemInsertedCount,
+      balanceInsertedCount,
+      balanceUpdatedCount,
       skippedCount: skipped.length,
       skipped,
     };
