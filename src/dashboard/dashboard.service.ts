@@ -1,16 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDashboardDto } from './dto/create-dashboard.dto';
-import { UpdateDashboardDto } from './dto/update-dashboard.dto';
+
 import { SearchDashboardDto } from './dto/search-dashboard.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class DashboardService {
   constructor(private prisma: PrismaService) {}
-
-  create(createDashboardDto: CreateDashboardDto) {
-    return 'This action adds a new dashboard';
-  }
 
   async findTotalDrug() {
     const total_drug_items = await this.prisma.drugitemcode.count();
@@ -52,7 +47,7 @@ export class DashboardService {
       take: 10,
       include: {
         drugitem: {
-          select: { name: true, strength:true },
+          select: { name: true, strength: true },
         },
       },
     });
@@ -82,9 +77,170 @@ export class DashboardService {
       take: 10,
       include: {
         drugitem: {
-          select: { name: true, strength:true },
+          select: { name: true, strength: true },
         },
       },
+    });
+  }
+
+  // async findTdMonthly(dto: SearchDashboardDto) {
+  //   const financialYear = dto.financialYear ?? this.getCurrentFiscalYear();
+  //   const { start, end } = this.getFiscalYearRange(financialYear);
+
+  //   // 1) ดึงข้อมูลจริงที่มีอยู่ในตาราง แล้ว group ตาม yearmonth
+  //   const grouped = await this.prisma.exportdrugitem.groupBy({
+  //     by: ['yearmonth'],
+  //     where: {
+  //       yearmonth: {
+  //         gte: start,
+  //         lte: end,
+  //       },
+  //     },
+  //     _count: { _all: true },
+  //     _sum: {
+  //       td: true,
+  //       dvalue: true,
+  //     },
+  //   });
+
+  //   // 2) ทำ map ไว้ค้นหาเร็วๆ ด้วย yearmonth (normalize แล้ว) เป็น key
+  //   //    normalize กันกรณี DB เก็บ format ไม่ตรงกับที่เรา generate (เช่น "2024-9" vs "2024-09")
+  //   // const groupedMap = new Map(
+  //   //   grouped.map((g) => [this.normalizeYearMonth(g.yearmonth), g]),
+  //   // );
+  //   const groupedMap = new Map(
+  //     grouped
+  //       .filter((g) => g.yearmonth !== null)
+  //       .map((g) => [this.normalizeYearMonth(g.yearmonth as string), g]),
+  //   );
+
+  //   // 3) สร้างรายการ 12 เดือนของปีงบประมาณ (ต.ค. -> ก.ย.) ให้ครบเสมอ
+  //   const months = this.getFiscalYearMonths(financialYear);
+
+  //   // 4) เติมข้อมูลจริงลงไป เดือนไหนไม่มีให้เป็น 0
+  //   return months.map((yearmonth) => {
+  //     const g = groupedMap.get(this.normalizeYearMonth(yearmonth));
+  //     return {
+  //       yearmonth,
+  //       ปีงบประมาณ: financialYear,
+  //       เดือน: this.formatThaiMonthLabel(yearmonth),
+  //       จำนวนรายการ: g?._count._all ?? 0,
+  //       ผลรวม_td: g?._sum.td ?? 0,
+  //       ผลรวม_dvalue: g?._sum.dvalue ?? 0,
+  //     };
+  //   });
+  // }
+  async findDvaluemonthly(dto: SearchDashboardDto) {
+    const financialYear = dto.financialYear ?? this.getCurrentFiscalYear();
+    const { start, end } = this.getFiscalYearRange(financialYear);
+
+    // 1) ดึงข้อมูลจริงที่มีอยู่ในตาราง แล้ว group ตาม yearmonth
+    const grouped = await this.prisma.exportdrugitem.groupBy({
+      by: ['yearmonth'],
+      where: {
+        yearmonth: {
+          gte: start,
+          lte: end,
+        },
+      },
+      _count: { _all: true },
+      _sum: {
+        td: true,
+        dvalue: true,
+      },
+    });
+
+    // 2) ทำ map ไว้ค้นหาเร็วๆ ด้วย yearmonth (normalize แล้ว) เป็น key
+    const groupedMap = new Map(
+      grouped
+        .filter((g) => g.yearmonth !== null)
+        .map((g) => [this.normalizeYearMonth(g.yearmonth as string), g]),
+    );
+
+    // 3) สร้างรายการ 12 เดือนของปีงบประมาณ (ต.ค. -> ก.ย.) ให้ครบเสมอ
+    const months = this.getFiscalYearMonths(financialYear);
+
+    // 3.1) คำนวณ "เดือนตัดรอบ" = เดือนก่อนหน้าเดือนปัจจุบัน 1 เดือน
+    //      เช่น วันนี้อยู่เดือน ส.ค. -> เดือนตัดรอบคือ ก.ค. (yearmonth ล่าสุดที่จะแสดง)
+    const now = new Date();
+    const cutoffDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const cutoffYearMonth = `${cutoffDate.getFullYear()}-${String(
+      cutoffDate.getMonth() + 1,
+    ).padStart(2, '0')}`;
+
+    // 3.2) ตัดเดือนที่ยังไม่ถึง (มากกว่าเดือนตัดรอบ) ออก
+    const visibleMonths = months.filter(
+      (yearmonth) => this.normalizeYearMonth(yearmonth) <= cutoffYearMonth,
+    );
+
+    // 4) เติมข้อมูลจริงลงไป เดือนไหนไม่มีให้เป็น 0
+    return visibleMonths.map((yearmonth) => {
+      const g = groupedMap.get(this.normalizeYearMonth(yearmonth));
+      return {
+        yearmonth,
+        ปีงบประมาณ: financialYear,
+        เดือน: this.formatThaiMonthLabel(yearmonth),
+        จำนวนรายการ: g?._count._all ?? 0,
+        td: g?._sum.td ?? 0,
+        dvalue: g?._sum.dvalue ?? 0,
+      };
+    });
+  }
+
+  async findRvalueMonthly(dto: SearchDashboardDto) {
+    const financialYear = dto.financialYear ?? this.getCurrentFiscalYear();
+    const { start, end } = this.getFiscalYearRange(financialYear);
+
+    // 1) ดึงข้อมูลจริงที่มีอยู่ในตาราง แล้ว group ตาม yearmonth
+    const grouped = await this.prisma.carrydrugitem.groupBy({
+      by: ['yearmonth'],
+      where: {
+        yearmonth: {
+          gte: start,
+          lte: end,
+        },
+      },
+      _count: { _all: true },
+      _sum: {
+        tremain: true,
+        remainvalue: true,
+      },
+    });
+
+    // 2) ทำ map ไว้ค้นหาเร็วๆ ด้วย yearmonth (normalize แล้ว) เป็น key
+    const groupedMap = new Map(
+      grouped
+        .filter((g) => g.yearmonth !== null)
+        .map((g) => [this.normalizeYearMonth(g.yearmonth as string), g]),
+    );
+
+    // 3) สร้างรายการ 12 เดือนของปีงบประมาณ (ต.ค. -> ก.ย.) ให้ครบเสมอ
+    const months = this.getFiscalYearMonths(financialYear);
+
+    // 3.1) คำนวณ "เดือนตัดรอบ" = เดือนก่อนหน้าเดือนปัจจุบัน 1 เดือน
+    //      เช่น วันนี้อยู่เดือน ส.ค. -> เดือนตัดรอบคือ ก.ค. (yearmonth ล่าสุดที่จะแสดง)
+    const now = new Date();
+    const cutoffDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const cutoffYearMonth = `${cutoffDate.getFullYear()}-${String(
+      cutoffDate.getMonth() + 1,
+    ).padStart(2, '0')}`;
+
+    // 3.2) ตัดเดือนที่ยังไม่ถึง (มากกว่าเดือนตัดรอบ) ออก
+    const visibleMonths = months.filter(
+      (yearmonth) => this.normalizeYearMonth(yearmonth) <= cutoffYearMonth,
+    );
+
+    // 4) เติมข้อมูลจริงลงไป เดือนไหนไม่มีให้เป็น 0
+    return visibleMonths.map((yearmonth) => {
+      const g = groupedMap.get(this.normalizeYearMonth(yearmonth));
+      return {
+        yearmonth,
+        ปีงบประมาณ: financialYear,
+        เดือน: this.formatThaiMonthLabel(yearmonth),
+        จำนวนรายการ: g?._count._all ?? 0,
+        tremain: g?._sum.tremain ?? 0,
+        remainvalue: g?._sum.remainvalue ?? 0,
+      };
     });
   }
   // ---------- Helpers: ปีงบประมาณ (ต.ค. -> ก.ย.) ----------
@@ -125,16 +281,55 @@ export class DashboardService {
     return `${gYear}-${String(month).padStart(2, '0')}`; // เช่น "2026-07"
   }
 
+  // normalize "YYYY-M" / " YYYY-MM " ให้เป็น "YYYY-MM" เสมอ กันปัญหา padding ไม่ตรง
+  private normalizeYearMonth(ym: string): string {
+    const [y, m] = ym.trim().split('-');
+    return `${y}-${String(Number(m)).padStart(2, '0')}`;
+  }
+
+  // สร้างรายการ yearmonth ("YYYY-MM") ครบ 12 เดือน เรียงจาก ต.ค. -> ก.ย. ของปีงบที่ระบุ (พ.ศ.)
+  private getFiscalYearMonths(financialYear: number): string[] {
+    const { start } = this.getFiscalYearRange(financialYear);
+    const [startYear, startMonth] = start.split('-').map(Number);
+
+    const months: string[] = [];
+    for (let i = 0; i < 12; i++) {
+      const totalMonth = startMonth - 1 + i; // 0-based
+      const y = startYear + Math.floor(totalMonth / 12);
+      const m = (totalMonth % 12) + 1;
+      months.push(`${y}-${String(m).padStart(2, '0')}`);
+    }
+    return months;
+  }
+
+  // แปลง yearmonth ("YYYY-MM", ค.ศ.) -> ป้ายกำกับเดือนภาษาไทย เช่น "ต.ค.68"
+  private formatThaiMonthLabel(yearmonth: string): string {
+    const thaiMonths: Record<string, string> = {
+      '10': 'ต.ค.',
+      '11': 'พ.ย.',
+      '12': 'ธ.ค.',
+      '01': 'ม.ค.',
+      '02': 'ก.พ.',
+      '03': 'มี.ค.',
+      '04': 'เม.ย.',
+      '05': 'พ.ค.',
+      '06': 'มิ.ย.',
+      '07': 'ก.ค.',
+      '08': 'ส.ค.',
+      '09': 'ก.ย.',
+    };
+
+    const [gYear, month] = this.normalizeYearMonth(yearmonth).split('-');
+    const beYearShort = String(Number(gYear) + 543).slice(-2);
+    return `${thaiMonths[month]}${beYearShort}`;
+  }
+
   findAll() {
     return `This action returns all dashboard`;
   }
 
   findOne(id: number) {
     return `This action returns a #${id} dashboard`;
-  }
-
-  update(id: number, updateDashboardDto: UpdateDashboardDto) {
-    return `This action updates a #${id} dashboard`;
   }
 
   remove(id: number) {

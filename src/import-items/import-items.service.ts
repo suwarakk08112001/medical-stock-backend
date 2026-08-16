@@ -1,8 +1,28 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import * as XLSX from 'xlsx';
-import { CreateImportItemDto } from './dto/create-import-item.dto';
 import { UpdateImportItemDto } from './dto/update-import-item.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+
+interface ImportExcelRow {
+  CODE1?: string | number | null;
+  MPack?: string | number | null;
+  Unit?: string | number | null;
+  TRemaine?: string | number | null;
+  RemaineValue?: string | number | null;
+  TR?: string | number | null;
+  RValue?: string | number | null;
+  TD?: string | number | null;
+  DValue?: string | number | null;
+  TTR?: string | number | null;
+  BalValue?: string | number | null;
+  YearMonth?: string | number | null;
+}
+
+export interface SkippedRow {
+  row: number;
+  reason: string;
+  data: ImportExcelRow;
+}
 
 @Injectable()
 export class ImportItemsService {
@@ -15,7 +35,7 @@ export class ImportItemsService {
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
 
-    const rows = XLSX.utils.sheet_to_json<Record<string, any>>(worksheet, {
+    const rows = XLSX.utils.sheet_to_json<ImportExcelRow>(worksheet, {
       defval: null,
       raw: false,
     });
@@ -24,7 +44,7 @@ export class ImportItemsService {
       throw new BadRequestException('ไฟล์ Excel ไม่มีข้อมูล');
     }
 
-    const skipped: { row: number; reason: string; data: any }[] = [];
+    const skipped: SkippedRow[] = [];
     let totaldrugitemInsertedCount = 0;
     let totaldrugitemUpdatedCount = 0;
     let balanceInsertedCount = 0;
@@ -33,25 +53,25 @@ export class ImportItemsService {
     let carrydrugitemUpdatedCount = 0;
     let importdrugitemInsertedCount = 0;
     let importdrugitemUpdatedCount = 0;
-    let exportdrugitemInsertedCount = 0;
+    const exportdrugitemInsertedCount = 0;
     let exportdrugitemUpdatedCount = 0;
 
     for (let index = 0; index < rows.length; index++) {
       const row = rows[index];
       const rowNo = index + 2;
 
-      const invcodeRaw = row['CODE1'];
-      const mpackRaw = row['MPack'];
-      const unitRaw = row['Unit'];
-      const tremainRaw = row['TRemaine'];
-      const remainvalueRaw = row['RemaineValue'];
-      const trRaw = row['TR'];
-      const rvalueRaw = row['RValue'];
-      const tdRaw = row['TD'];
-      const dvalueRaw = row['DValue'];
-      const qtyRaw = row['TTR'];
-      const balvalueRaw = row['BalValue'];
-      const yearmonthRaw = row['YearMonth'];
+      const invcodeRaw = row.CODE1;
+      const mpackRaw = row.MPack;
+      const unitRaw = row.Unit;
+      const tremainRaw = row.TRemaine;
+      const remainvalueRaw = row.RemaineValue;
+      const trRaw = row.TR;
+      const rvalueRaw = row.RValue;
+      const tdRaw = row.TD;
+      const dvalueRaw = row.DValue;
+      const qtyRaw = row.TTR;
+      const balvalueRaw = row.BalValue;
+      const yearmonthRaw = row.YearMonth;
 
       const invcode = invcodeRaw != null ? String(invcodeRaw).trim() : null;
       const mpack = mpackRaw != null ? Number(mpackRaw) : NaN;

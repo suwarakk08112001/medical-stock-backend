@@ -1,10 +1,10 @@
 import * as crypto from 'crypto';
 
-export async function comparePassword(
+export function comparePassword(
   password: string,
   hash: string,
 ): Promise<boolean> {
-  if (!hash) return false;
+  if (!hash) return Promise.resolve(false);
 
   const computed = crypto
     .createHash('md5')
@@ -12,5 +12,5 @@ export async function comparePassword(
     .digest('hex')
     .toUpperCase();
 
-  return computed === hash.toUpperCase(); // md5 = 32 ตัว ≠ 86 ตัว → false เสมอ
+  return Promise.resolve(computed === hash.toUpperCase());
 }
