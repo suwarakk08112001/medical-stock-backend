@@ -133,7 +133,7 @@ export class DashboardService {
   async findDvaluemonthly(dto: SearchDashboardDto) {
     const financialYear = dto.financialYear ?? this.getCurrentFiscalYear();
     const { start, end } = this.getFiscalYearRange(financialYear);
-
+  
     // 1) ดึงข้อมูลจริงที่มีอยู่ในตาราง แล้ว group ตาม yearmonth
     const grouped = await this.prisma.exportdrugitem.groupBy({
       by: ['yearmonth'],
@@ -149,17 +149,17 @@ export class DashboardService {
         dvalue: true,
       },
     });
-
+  
     // 2) ทำ map ไว้ค้นหาเร็วๆ ด้วย yearmonth (normalize แล้ว) เป็น key
     const groupedMap = new Map(
       grouped
         .filter((g) => g.yearmonth !== null)
         .map((g) => [this.normalizeYearMonth(g.yearmonth as string), g]),
     );
-
+  
     // 3) สร้างรายการ 12 เดือนของปีงบประมาณ (ต.ค. -> ก.ย.) ให้ครบเสมอ
     const months = this.getFiscalYearMonths(financialYear);
-
+  
     // 3.1) คำนวณ "เดือนตัดรอบ" = เดือนก่อนหน้าเดือนปัจจุบัน 1 เดือน
     //      เช่น วันนี้อยู่เดือน ส.ค. -> เดือนตัดรอบคือ ก.ค. (yearmonth ล่าสุดที่จะแสดง)
     const now = new Date();
@@ -167,30 +167,35 @@ export class DashboardService {
     const cutoffYearMonth = `${cutoffDate.getFullYear()}-${String(
       cutoffDate.getMonth() + 1,
     ).padStart(2, '0')}`;
-
+  
     // 3.2) ตัดเดือนที่ยังไม่ถึง (มากกว่าเดือนตัดรอบ) ออก
     const visibleMonths = months.filter(
       (yearmonth) => this.normalizeYearMonth(yearmonth) <= cutoffYearMonth,
     );
-
+  
     // 4) เติมข้อมูลจริงลงไป เดือนไหนไม่มีให้เป็น 0
     return visibleMonths.map((yearmonth) => {
       const g = groupedMap.get(this.normalizeYearMonth(yearmonth));
+  
+      // แปลง dvalue ให้เป็น number ก่อน (เผื่อเป็น Prisma.Decimal) แล้วปัด 2 ตำแหน่ง
+      const rawDvalue = g?._sum.dvalue ? Number(g._sum.dvalue) : 0;
+      const roundedDvalue = Math.round(rawDvalue * 100) / 100;
+  
       return {
         yearmonth,
         ปีงบประมาณ: financialYear,
         เดือน: this.formatThaiMonthLabel(yearmonth),
         จำนวนรายการ: g?._count._all ?? 0,
         td: g?._sum.td ?? 0,
-        dvalue: g?._sum.dvalue ?? 0,
+        dvalue: roundedDvalue,
       };
     });
   }
-
-  async findRvalueMonthly(dto: SearchDashboardDto) {
+  
+  async findRemainvalueMonthly(dto: SearchDashboardDto) {
     const financialYear = dto.financialYear ?? this.getCurrentFiscalYear();
     const { start, end } = this.getFiscalYearRange(financialYear);
-
+  
     // 1) ดึงข้อมูลจริงที่มีอยู่ในตาราง แล้ว group ตาม yearmonth
     const grouped = await this.prisma.carrydrugitem.groupBy({
       by: ['yearmonth'],
@@ -206,17 +211,17 @@ export class DashboardService {
         remainvalue: true,
       },
     });
-
+  
     // 2) ทำ map ไว้ค้นหาเร็วๆ ด้วย yearmonth (normalize แล้ว) เป็น key
     const groupedMap = new Map(
       grouped
         .filter((g) => g.yearmonth !== null)
         .map((g) => [this.normalizeYearMonth(g.yearmonth as string), g]),
     );
-
+  
     // 3) สร้างรายการ 12 เดือนของปีงบประมาณ (ต.ค. -> ก.ย.) ให้ครบเสมอ
     const months = this.getFiscalYearMonths(financialYear);
-
+  
     // 3.1) คำนวณ "เดือนตัดรอบ" = เดือนก่อนหน้าเดือนปัจจุบัน 1 เดือน
     //      เช่น วันนี้อยู่เดือน ส.ค. -> เดือนตัดรอบคือ ก.ค. (yearmonth ล่าสุดที่จะแสดง)
     const now = new Date();
@@ -224,22 +229,146 @@ export class DashboardService {
     const cutoffYearMonth = `${cutoffDate.getFullYear()}-${String(
       cutoffDate.getMonth() + 1,
     ).padStart(2, '0')}`;
-
+  
     // 3.2) ตัดเดือนที่ยังไม่ถึง (มากกว่าเดือนตัดรอบ) ออก
     const visibleMonths = months.filter(
       (yearmonth) => this.normalizeYearMonth(yearmonth) <= cutoffYearMonth,
     );
-
+  
     // 4) เติมข้อมูลจริงลงไป เดือนไหนไม่มีให้เป็น 0
     return visibleMonths.map((yearmonth) => {
       const g = groupedMap.get(this.normalizeYearMonth(yearmonth));
+  
+      // แปลง remainvalue ให้เป็น number ก่อน (เผื่อเป็น Prisma.Decimal) แล้วปัด 2 ตำแหน่ง
+      const rawRemainvalue = g?._sum.remainvalue
+        ? Number(g._sum.remainvalue)
+        : 0;
+      const roundedRemainvalue = Math.round(rawRemainvalue * 100) / 100;
+  
       return {
         yearmonth,
         ปีงบประมาณ: financialYear,
         เดือน: this.formatThaiMonthLabel(yearmonth),
         จำนวนรายการ: g?._count._all ?? 0,
         tremain: g?._sum.tremain ?? 0,
-        remainvalue: g?._sum.remainvalue ?? 0,
+        remainvalue: roundedRemainvalue,
+      };
+    });
+  }
+  // async findRvalueMonthly(dto: SearchDashboardDto) {
+  //   const financialYear = dto.financialYear ?? this.getCurrentFiscalYear();
+  //   const { start, end } = this.getFiscalYearRange(financialYear);
+
+  //   // 1) ดึงข้อมูลจริงที่มีอยู่ในตาราง แล้ว group ตาม yearmonth
+  //   const grouped = await this.prisma.importdrugitem.groupBy({
+  //     by: ['yearmonth'],
+  //     where: {
+  //       yearmonth: {
+  //         gte: start,
+  //         lte: end,
+  //       },
+  //     },
+  //     _count: { _all: true },
+  //     _sum: {
+  //       tr: true,
+  //       rvalue: true,
+  //     },
+  //   });
+
+  //   // 2) ทำ map ไว้ค้นหาเร็วๆ ด้วย yearmonth (normalize แล้ว) เป็น key
+  //   const groupedMap = new Map(
+  //     grouped
+  //       .filter((g) => g.yearmonth !== null)
+  //       .map((g) => [this.normalizeYearMonth(g.yearmonth as string), g]),
+  //   );
+
+  //   // 3) สร้างรายการ 12 เดือนของปีงบประมาณ (ต.ค. -> ก.ย.) ให้ครบเสมอ
+  //   const months = this.getFiscalYearMonths(financialYear);
+
+  //   // 3.1) คำนวณ "เดือนตัดรอบ" = เดือนก่อนหน้าเดือนปัจจุบัน 1 เดือน
+  //   //      เช่น วันนี้อยู่เดือน ส.ค. -> เดือนตัดรอบคือ ก.ค. (yearmonth ล่าสุดที่จะแสดง)
+  //   const now = new Date();
+  //   const cutoffDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  //   const cutoffYearMonth = `${cutoffDate.getFullYear()}-${String(
+  //     cutoffDate.getMonth() + 1,
+  //   ).padStart(2, '0')}`;
+
+  //   // 3.2) ตัดเดือนที่ยังไม่ถึง (มากกว่าเดือนตัดรอบ) ออก
+  //   const visibleMonths = months.filter(
+  //     (yearmonth) => this.normalizeYearMonth(yearmonth) <= cutoffYearMonth,
+  //   );
+
+  //   // 4) เติมข้อมูลจริงลงไป เดือนไหนไม่มีให้เป็น 0
+  //   return visibleMonths.map((yearmonth) => {
+  //     const g = groupedMap.get(this.normalizeYearMonth(yearmonth));
+  //     return {
+  //       yearmonth,
+  //       ปีงบประมาณ: financialYear,
+  //       เดือน: this.formatThaiMonthLabel(yearmonth),
+  //       จำนวนรายการ: g?._count._all ?? 0,
+  //       tr: g?._sum.tr ?? 0,
+  //       rvalue: g?._sum.rvalue ?? 0,
+  //     };
+  //   });
+  // }
+  async findRvalueMonthly(dto: SearchDashboardDto) {
+    const financialYear = dto.financialYear ?? this.getCurrentFiscalYear();
+    const { start, end } = this.getFiscalYearRange(financialYear);
+  
+    // 1) ดึงข้อมูลจริงที่มีอยู่ในตาราง แล้ว group ตาม yearmonth
+    const grouped = await this.prisma.importdrugitem.groupBy({
+      by: ['yearmonth'],
+      where: {
+        yearmonth: {
+          gte: start,
+          lte: end,
+        },
+      },
+      _count: { _all: true },
+      _sum: {
+        tr: true,
+        rvalue: true,
+      },
+    });
+  
+    // 2) ทำ map ไว้ค้นหาเร็วๆ ด้วย yearmonth (normalize แล้ว) เป็น key
+    const groupedMap = new Map(
+      grouped
+        .filter((g) => g.yearmonth !== null)
+        .map((g) => [this.normalizeYearMonth(g.yearmonth as string), g]),
+    );
+  
+    // 3) สร้างรายการ 12 เดือนของปีงบประมาณ (ต.ค. -> ก.ย.) ให้ครบเสมอ
+    const months = this.getFiscalYearMonths(financialYear);
+  
+    // 3.1) คำนวณ "เดือนตัดรอบ" = เดือนก่อนหน้าเดือนปัจจุบัน 1 เดือน
+    //      เช่น วันนี้อยู่เดือน ส.ค. -> เดือนตัดรอบคือ ก.ค. (yearmonth ล่าสุดที่จะแสดง)
+    const now = new Date();
+    const cutoffDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const cutoffYearMonth = `${cutoffDate.getFullYear()}-${String(
+      cutoffDate.getMonth() + 1,
+    ).padStart(2, '0')}`;
+  
+    // 3.2) ตัดเดือนที่ยังไม่ถึง (มากกว่าเดือนตัดรอบ) ออก
+    const visibleMonths = months.filter(
+      (yearmonth) => this.normalizeYearMonth(yearmonth) <= cutoffYearMonth,
+    );
+  
+    // 4) เติมข้อมูลจริงลงไป เดือนไหนไม่มีให้เป็น 0
+    return visibleMonths.map((yearmonth) => {
+      const g = groupedMap.get(this.normalizeYearMonth(yearmonth));
+  
+      // แปลง rvalue ให้เป็น number ก่อน (เผื่อเป็น Prisma.Decimal) แล้วปัด 2 ตำแหน่ง
+      const rawRvalue = g?._sum.rvalue ? Number(g._sum.rvalue) : 0;
+      const roundedRvalue = Math.round(rawRvalue * 100) / 100;
+  
+      return {
+        yearmonth,
+        ปีงบประมาณ: financialYear,
+        เดือน: this.formatThaiMonthLabel(yearmonth),
+        จำนวนรายการ: g?._count._all ?? 0,
+        tr: g?._sum.tr ?? 0,
+        rvalue: roundedRvalue,
       };
     });
   }

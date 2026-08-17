@@ -32,6 +32,11 @@ export class DashboardController {
     return this.dashboardService.findDvaluemonthly(dto);
   }
 
+  @Get('Remainvaluemonthly')
+  findRemainvalueMonthly(@Query() dto: SearchDashboardDto) {
+    return this.dashboardService.findRemainvalueMonthly(dto);
+  }
+
   @Get('Rvaluemonthly')
   findRvalueMonthly(@Query() dto: SearchDashboardDto) {
     return this.dashboardService.findRvalueMonthly(dto);
