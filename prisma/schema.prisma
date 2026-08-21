@@ -379,12 +379,12 @@ model opitemrece {
 
 model drugitemcode{
   id            Int         @id @default(autoincrement())
-  icode         String?     @db.VarChar(7)
-  invcode       String?     @db.VarChar(10)
+  icode         String     @db.VarChar(7)
+  invcode       String     @db.VarChar(10)
   mpack         Int
   unit          String?
   
-  drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
+  drugitem  drugitems  @relation(fields: [icode,invcode], references: [icode,invcode])
   @@index([icode, invcode], name: "icode_invcode")
 }
 

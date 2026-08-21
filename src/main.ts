@@ -7,12 +7,12 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api/v1');
 
-  app.useGlobalPipes(
-    new ValidationPipe({
-      transform: true, // แปลง query string เป็น type ตาม @Type() ใน DTO
-      whitelist: true, // ตัด field ที่ไม่ได้ประกาศใน DTO ทิ้ง
-    }),
-  );
+  // app.useGlobalPipes(
+  //   new ValidationPipe({
+  //     transform: true, // แปลง query string เป็น type ตาม @Type() ใน DTO
+  //     whitelist: true, // ตัด field ที่ไม่ได้ประกาศใน DTO ทิ้ง
+  //   }),
+  // );
 
   app.enableCors({
     origin: process.env.FRONTEND,
