@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { Opduser } from 'generated/prisma/client';
+import { Opduser } from 'generated/db1/client';
 interface AuthenticatedRequest {
   opduser: Opduser;
 }

@@ -32,6 +32,11 @@ export class BackofficeDashboardController {
   findExportHosxP(@Query() dto:SearchDashboardDto) {
     return this.backofficeDashboardService.findExportHosxP(dto);
   }
+
+  @Get('exportHosxpPCU')
+  findExportHosxpPCU(@Query() dto:SearchDashboardDto) {
+    return this.backofficeDashboardService.findExportHosxpPCU(dto);
+  }
   
   @Get('export')
   findExport(@Query() dto:SearchDashboardDto) {

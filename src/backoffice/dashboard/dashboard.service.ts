@@ -3,7 +3,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateDashboardDto } from './dto/create-dashboard.dto';
 import { UpdateDashboardDto } from './dto/update-dashboard.dto';
 import { SearchDashboardDto } from './dto/seach-dashboard.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { DB1PrismaService } from 'src/prisma/db1-prisma.service';
+import { DB2PrismaService } from 'src/prisma/db2-prisma.service';
 
 /** แถวที่มี field yearmonth แบบ nullable (ใช้ constrain generic helper) */
 interface YearMonthRow {
@@ -12,7 +13,9 @@ interface YearMonthRow {
 
 @Injectable()
 export class BackofficeDashboardService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+       private db1prisma: DB1PrismaService,
+       private db2prisma: DB2PrismaService) {}
 
   create(createDashboardDto: CreateDashboardDto) {
     return 'This action adds a new dashboard';
@@ -24,7 +27,7 @@ export class BackofficeDashboardService {
     }
 
     const [record, aggregated] = await Promise.all([
-      this.prisma.balance.findFirst({
+      this.db1prisma.balance.findFirst({
         where: { icode },
         select: {
           icode: true,
@@ -40,7 +43,7 @@ export class BackofficeDashboardService {
           },
         },
       }),
-      this.prisma.balance.aggregate({
+      this.db1prisma.balance.aggregate({
         where: { icode },
         _sum: {
           ttr: true,
@@ -67,15 +70,15 @@ export class BackofficeDashboardService {
     const financialYear = dto.financialYear ?? this.getCurrentFiscalYear();
     const { start, end } = this.getFiscalYearRange(financialYear);
 
-    const grouped = await this.prisma.carrydrugitem.groupBy({
+    const grouped = await this.db1prisma.carrydrugitem.groupBy({
       by: ['yearmonth'],
       where: { icode: dto.icode, yearmonth: { gte: start, lte: end } },
       _count: { _all: true },
       _sum: { tremain: true, remainvalue: true },
     });
 
-    const groupedMap = this.toYearMonthMap(grouped);
-
+    // const groupedMap = this.toYearMonthMap(grouped);
+    const groupedMap = this.toYearMonthMap<typeof grouped[number]>(grouped);
     return this.buildMonthlyReport(financialYear, groupedMap, (g) => ({
       จำนวนรายการ: g?._count._all ?? 0,
       tremain: g?._sum.tremain ?? 0,
@@ -88,14 +91,15 @@ export class BackofficeDashboardService {
     const financialYear = dto.financialYear ?? this.getCurrentFiscalYear();
     const { start, end } = this.getFiscalYearRange(financialYear);
 
-    const grouped = await this.prisma.importdrugitem.groupBy({
+    const grouped = await this.db1prisma.importdrugitem.groupBy({
       by: ['yearmonth'],
       where: { icode: dto.icode, yearmonth: { gte: start, lte: end } },
       _count: { _all: true },
       _sum: { tr: true, rvalue: true },
     });
 
-    const groupedMap = this.toYearMonthMap(grouped);
+    // const groupedMap = this.toYearMonthMap(grouped);
+    const groupedMap = this.toYearMonthMap<typeof grouped[number]>(grouped);
 
     return this.buildMonthlyReport(financialYear, groupedMap, (g) => ({
       จำนวนรายการ: g?._count._all ?? 0,
@@ -109,15 +113,15 @@ export class BackofficeDashboardService {
     const financialYear = dto.financialYear ?? this.getCurrentFiscalYear();
     const { start, end } = this.getFiscalYearRange(financialYear);
 
-    const grouped = await this.prisma.exportdrugitem.groupBy({
+    const grouped = await this.db1prisma.exportdrugitem.groupBy({
       by: ['yearmonth'],
       where: { icode: dto.icode, yearmonth: { gte: start, lte: end } },
       _count: { _all: true },
       _sum: { td: true, dvalue: true },
     });
 
-    const groupedMap = this.toYearMonthMap(grouped);
-
+    // const groupedMap = this.toYearMonthMap(grouped);
+    const groupedMap = this.toYearMonthMap<typeof grouped[number]>(grouped);
     return this.buildMonthlyReport(financialYear, groupedMap, (g) => ({
       จำนวนรายการ: g?._count._all ?? 0,
       tr: g?._sum.td ?? 0,
@@ -135,7 +139,46 @@ export class BackofficeDashboardService {
     const startDate = `${start}-01`;
     const endDate = `${end}-30`;
 
-    const rows = await this.prisma.$queryRaw<
+    const rows = await this.db1prisma.$queryRaw<
+      { yearmonth: string; item_count: bigint; qty: string | null }[]
+    >`
+      SELECT
+        DATE_FORMAT(vstdate, '%Y-%m') AS yearmonth,
+        COUNT(*) AS item_count,
+        SUM(qty) AS qty
+      FROM opitemrece
+      WHERE icode = ${dto.icode}
+        AND vstdate >= ${startDate}
+        AND vstdate <= ${endDate}
+      GROUP BY yearmonth
+      ORDER BY yearmonth
+    `;
+
+    const monthlyMap = new Map<string, { qty: number; item_count: number }>(
+      rows.map((row) => [
+        this.normalizeYearMonth(row.yearmonth),
+        { qty: Number(row.qty ?? 0), item_count: Number(row.item_count) },
+      ]),
+    );
+
+    return this.buildMonthlyReport(financialYear, monthlyMap, (m) => ({
+      จำนวนรายการ: m?.item_count ?? 0,
+      tr: m?.qty ?? 0,
+      rvalue: 0,
+    }));
+  }
+
+  async findExportHosxpPCU(dto: SearchDashboardDto){
+    this.assertIcode(dto);
+    const financialYear = dto.financialYear ?? this.getCurrentFiscalYear();
+    const { start, end } = this.getFiscalYearRange(financialYear);
+
+    // opitemrece.vstdate เป็น Date จริง ไม่มี yearmonth ให้ group ตรงๆ เหมือนตารางอื่น
+    // เติมวันที่ให้ครบก่อนเทียบ แล้วให้ DB group เป็นรายเดือนเลยผ่าน DATE_FORMAT (เร็วกว่าดึงรายวันมารวมฝั่ง service)
+    const startDate = `${start}-01`;
+    const endDate = `${end}-30`;
+
+    const rows = await this.db2prisma.$queryRaw<
       { yearmonth: string; item_count: bigint; qty: string | null }[]
     >`
       SELECT
@@ -169,15 +212,15 @@ export class BackofficeDashboardService {
     const financialYear = dto.financialYear ?? this.getCurrentFiscalYear();
     const { start, end } = this.getFiscalYearRange(financialYear);
 
-    const grouped = await this.prisma.balance.groupBy({
+    const grouped = await this.db1prisma.balance.groupBy({
       by: ['yearmonth'],
       where: { icode: dto.icode, yearmonth: { gte: start, lte: end } },
       _count: { _all: true },
       _sum: { ttr: true, bal_value: true },
     });
 
-    const groupedMap = this.toYearMonthMap(grouped);
-
+    // const groupedMap = this.toYearMonthMap(grouped);
+    const groupedMap = this.toYearMonthMap<typeof grouped[number]>(grouped);
     return this.buildMonthlyReport(financialYear, groupedMap, (g) => ({
       จำนวนรายการ: g?._count._all ?? 0,
       ttr: g?._sum.ttr ?? 0,

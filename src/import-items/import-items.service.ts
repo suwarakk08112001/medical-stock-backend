@@ -1,7 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import * as XLSX from 'xlsx';
 import { UpdateImportItemDto } from './dto/update-import-item.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { DB1PrismaService } from 'src/prisma/db1-prisma.service';
 
 interface ImportExcelRow {
   CODE1?: string | number | null;
@@ -26,7 +26,7 @@ export interface SkippedRow {
 
 @Injectable()
 export class ImportItemsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly db1prisma: DB1PrismaService) {}
 
   async upload(buffer: Buffer) {
     const workbook = XLSX.read(buffer, { type: 'buffer' });
@@ -135,7 +135,7 @@ export class ImportItemsService {
 
       try {
         // 1) หา icode จาก invcode ในตาราง drugitems
-        const drugitem = await this.prisma.drugitems.findFirst({
+        const drugitem = await this.db1prisma.drugitems.findFirst({
           where: { invcode },
           select: { icode: true },
         });
@@ -152,30 +152,30 @@ export class ImportItemsService {
         const { icode } = drugitem;
 
         // 2) เช็คว่ามี icode + invcode นี้ใน totaldrugitem แล้วหรือยัง
-        const existingdrugitemcode = await this.prisma.drugitemcode.findFirst({
+        const existingdrugitemcode = await this.db1prisma.drugitemcode.findFirst({
           where: { icode, invcode },
         });
 
         if (existingdrugitemcode) {
-          await this.prisma.drugitemcode.update({
+          await this.db1prisma.drugitemcode.update({
             where: { id: existingdrugitemcode.id },
             data: { mpack, unit: String(unit) },
           });
           totaldrugitemUpdatedCount++;
         } else {
-          await this.prisma.drugitemcode.create({
+          await this.db1prisma.drugitemcode.create({
             data: { icode, invcode, mpack, unit: String(unit) },
           });
           totaldrugitemInsertedCount++;
         }
 
         const existingcarrytotaldrug =
-          await this.prisma.carrydrugitem.findFirst({
+          await this.db1prisma.carrydrugitem.findFirst({
             where: { icode, invcode, yearmonth },
           });
 
         if (existingcarrytotaldrug) {
-          await this.prisma.carrydrugitem.update({
+          await this.db1prisma.carrydrugitem.update({
             where: { id: existingcarrytotaldrug.id },
             data: {
               mpack,
@@ -186,7 +186,7 @@ export class ImportItemsService {
           });
           carrydrugitemUpdatedCount++;
         } else {
-          await this.prisma.carrydrugitem.create({
+          await this.db1prisma.carrydrugitem.create({
             data: {
               icode,
               invcode,
@@ -201,12 +201,12 @@ export class ImportItemsService {
         }
 
         const existingimporttotaldrug =
-          await this.prisma.importdrugitem.findFirst({
+          await this.db1prisma.importdrugitem.findFirst({
             where: { icode, invcode, yearmonth },
           });
 
         if (existingimporttotaldrug) {
-          await this.prisma.importdrugitem.update({
+          await this.db1prisma.importdrugitem.update({
             where: { id: existingimporttotaldrug.id },
             data: {
               mpack,
@@ -217,7 +217,7 @@ export class ImportItemsService {
           });
           importdrugitemUpdatedCount++;
         } else {
-          await this.prisma.importdrugitem.create({
+          await this.db1prisma.importdrugitem.create({
             data: {
               icode,
               invcode,
@@ -232,12 +232,12 @@ export class ImportItemsService {
         }
 
         const existingexporttotaldrug =
-          await this.prisma.exportdrugitem.findFirst({
+          await this.db1prisma.exportdrugitem.findFirst({
             where: { icode, invcode, yearmonth },
           });
 
         if (existingexporttotaldrug) {
-          await this.prisma.exportdrugitem.update({
+          await this.db1prisma.exportdrugitem.update({
             where: { id: existingexporttotaldrug.id },
             data: {
               mpack,
@@ -248,7 +248,7 @@ export class ImportItemsService {
           });
           exportdrugitemUpdatedCount++;
         } else {
-          await this.prisma.exportdrugitem.create({
+          await this.db1prisma.exportdrugitem.create({
             data: {
               icode,
               invcode,
@@ -264,12 +264,12 @@ export class ImportItemsService {
 
         // 3) หา record ของ inventory แยกต่างหาก ด้วย icode + invcode + yearmonth
         // (ห้ามใช้ existing.id จากขั้นตอนที่ 2 เพราะเป็น id ของ totaldrugitem คนละตารางกัน)
-        const existingbalance = await this.prisma.balance.findFirst({
+        const existingbalance = await this.db1prisma.balance.findFirst({
           where: { icode, invcode, yearmonth },
         });
 
         if (existingbalance) {
-          await this.prisma.balance.update({
+          await this.db1prisma.balance.update({
             where: { id: existingbalance.id },
             data: {
               ttr: tqty,
@@ -280,7 +280,7 @@ export class ImportItemsService {
           });
           balanceUpdatedCount++;
         } else {
-          await this.prisma.balance.create({
+          await this.db1prisma.balance.create({
             data: {
               icode,
               invcode,

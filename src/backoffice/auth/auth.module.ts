@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { AuthRepositories } from './auth.repositories';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { DB1PrismaService } from 'src/prisma/db1-prisma.service';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/common/guard/jwt/jwt-strategy';
@@ -21,7 +21,7 @@ import { ExceptionModule } from 'src/common/exception/exception.module';
   providers: [
     AuthService,
     AuthRepositories,
-    PrismaService,
+    DB1PrismaService,
     JwtStrategy,
     LocalStrategy,
   ],

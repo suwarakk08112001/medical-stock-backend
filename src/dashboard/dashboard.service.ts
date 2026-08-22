@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
 
 import { SearchDashboardDto } from './dto/search-dashboard.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { DB1PrismaService } from 'src/prisma/db1-prisma.service';
 
 @Injectable()
 export class DashboardService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private db1prisma: DB1PrismaService) {}
 
   async findTotalDrug() {
-    const total_drug_items = await this.prisma.drugitemcode.count();
+    const total_drug_items = await this.db1prisma.drugitemcode.count();
     return { total_drug_items };
   }
 
   async findTotalBvalue() {
-    const result = await this.prisma.balance.aggregate({
+    const result = await this.db1prisma.balance.aggregate({
       _sum: {
         bal_value: true,
       },
@@ -39,7 +39,7 @@ export class DashboardService {
     console.log('financialYear used:', financialYear);
     console.log('computed where:', JSON.stringify(where));
 
-    return this.prisma.balance.findMany({
+    return this.db1prisma.balance.findMany({
       where,
       orderBy: {
         ttr: 'desc',
@@ -69,7 +69,7 @@ export class DashboardService {
     console.log('financialYear used:', financialYear);
     console.log('computed where:', JSON.stringify(where));
 
-    return this.prisma.importdrugitem.findMany({
+    return this.db1prisma.importdrugitem.findMany({
       where,
       orderBy: {
         tr: 'desc',
@@ -135,7 +135,7 @@ export class DashboardService {
     const { start, end } = this.getFiscalYearRange(financialYear);
   
     // 1) ดึงข้อมูลจริงที่มีอยู่ในตาราง แล้ว group ตาม yearmonth
-    const grouped = await this.prisma.exportdrugitem.groupBy({
+    const grouped = await this.db1prisma.exportdrugitem.groupBy({
       by: ['yearmonth'],
       where: {
         yearmonth: {
@@ -197,7 +197,7 @@ export class DashboardService {
     const { start, end } = this.getFiscalYearRange(financialYear);
   
     // 1) ดึงข้อมูลจริงที่มีอยู่ในตาราง แล้ว group ตาม yearmonth
-    const grouped = await this.prisma.carrydrugitem.groupBy({
+    const grouped = await this.db1prisma.carrydrugitem.groupBy({
       by: ['yearmonth'],
       where: {
         yearmonth: {
@@ -316,7 +316,7 @@ export class DashboardService {
     const { start, end } = this.getFiscalYearRange(financialYear);
   
     // 1) ดึงข้อมูลจริงที่มีอยู่ในตาราง แล้ว group ตาม yearmonth
-    const grouped = await this.prisma.importdrugitem.groupBy({
+    const grouped = await this.db1prisma.importdrugitem.groupBy({
       by: ['yearmonth'],
       where: {
         yearmonth: {

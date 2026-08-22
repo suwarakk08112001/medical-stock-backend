@@ -2,21 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { CreateDrugitemDto } from './dto/create-drugitem.dto';
 import { UpdateDrugitemDto } from './dto/update-drugitem.dto';
 import { ResponseDrugitemdto } from './dto/response-drugitem.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { DB1PrismaService } from 'src/prisma/db1-prisma.service';
 import { PaginatedResult } from 'src/common/pagination/paginate.interface';
-import { Prisma } from 'generated/prisma/client';
+import { Prisma } from 'generated/db1/client';
 import { paginate } from 'src/common/pagination/paginate.util';
 import { PaginationDrugitemDto } from './dto/paginate-drugitem.dto';
 
 @Injectable()
 export class DrugitemsRepositories {
-    constructor(private prisma: PrismaService) {}
+    constructor(private db1prisma: DB1PrismaService) {}
   create(createDrugitemDto: CreateDrugitemDto) {
     return 'This action adds a new drugitem';
   }
   async findAll(): Promise<ResponseDrugitemdto[]> {
    
-    return this.prisma.drugitemcode.findMany({
+    return this.db1prisma.drugitemcode.findMany({
       select: {
         id: true,
         mpack: true,
@@ -57,7 +57,7 @@ export class DrugitemsRepositories {
       : {};
   
     const queryFn = (skip: number, take: number) => {
-      return this.prisma.drugitemcode.findMany({
+      return this.db1prisma.drugitemcode.findMany({
         where: whereCondition,
         skip,
         take,
@@ -81,7 +81,7 @@ export class DrugitemsRepositories {
     };
   
     const countFn = () => {
-      return this.prisma.drugitemcode.count({ where: whereCondition });
+      return this.db1prisma.drugitemcode.count({ where: whereCondition });
     };
   
     return paginate(queryFn, countFn, options);
