@@ -11,4 +11,5 @@
 export type * from './models/drugitems.js'
 export type * from './models/opitemrece.js'
 export type * from './models/drugitemcode.js'
+export type * from './models/TransactionDrugRollBack.js'
 export type * from './commonInputTypes.js'

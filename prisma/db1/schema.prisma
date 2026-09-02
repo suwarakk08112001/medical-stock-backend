@@ -279,13 +279,9 @@ model drugitems {
   ttmt_code                       String?   @db.VarChar(10)
   h1                             String?   @db.VarChar(10)
   h2                             String?   @db.VarChar(10)
+  drugItemCodes           drugItemCodes[]   // ★ เพิ่มบรรทัดนี้
 
-
-  drugitemcode                   drugitemcode[]   // <-- เพิ่มบรรทัดนี้ (opposite relation)
-  balance                        balance[]
-  carrydrugitem                  carrydrugitem[]
-  importdrugitem                 importdrugitem[]
-  exportdrugitem                 exportdrugitem[]
+ 
 
 
    @@unique([icode, invcode])
@@ -357,7 +353,7 @@ model opitemrece {
   stock_department_id           Int?
   command_doctor                String?   @db.VarChar(10)
   opi_doctor_finance_type_id     Int?
-
+  transactionDrugRollbacks transactionDrugRollbacks[]   // ★ เพิ่มบรรทัดนี้
   @@index([an], map: "ix_an")
   @@index([doctor], map: "ix_doctor")
   @@index([drugusage], map: "ix_drugusage")
@@ -376,69 +372,91 @@ model opitemrece {
   @@index([an, order_no], map: "ix_an_order_no")
 }
 
-model drugitemcode{
-  id            Int         @id @default(autoincrement())
-  icode         String     @db.VarChar(7)
-  invcode       String     @db.VarChar(10)
-  mpack         Int
-  unit          String?
-  
-  drugitem  drugitems  @relation(fields: [icode,invcode], references: [icode,invcode])
-  @@index([icode, invcode], name: "icode_invcode")
+
+
+
+
+
+
+
+
+model drugItemCodes {
+  id      Int     @id @default(autoincrement())
+  icode   String  @db.VarChar(7)
+  invcode String  @db.VarChar(10)
+  type    String  @db.VarChar(50)
+  mpack   Int
+  unit    String? @db.VarChar(50)
+
+  drugitem drugitems @relation(fields: [icode, invcode], references: [icode, invcode])
+
+  totalDrugItemHOS      totalDrugItemHOSs[]
+  totalDrugHosRollbacks totalDrugHosRollbacks[]
+  drugItemStocks        drugItemStocks[]
+  transactionDrugRollbacks transactionDrugRollbacks[]   
+  @@unique([icode, invcode], name: "icode_invcode")
 }
 
-model carrydrugitem{
-  id            Int         @id @default(autoincrement())
-  icode         String?     @db.VarChar(7)
-  invcode       String?     @db.VarChar(10)
-  mpack         Int
-  unit          String?
-  tremain            Int
-  remainvalue        Float?      @db.Double
-  yearmonth     String?     @db.VarChar(7)
-  drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
-  @@index([icode, invcode], name: "icode_invcode")
+model totalDrugItemHOSs {
+  id             Int @id @default(autoincrement())
+  drugItemCodeId Int @unique
+  qty            Int
+
+  drugItemCodes drugItemCodes @relation(fields: [drugItemCodeId], references: [id])
 }
 
-model importdrugitem{
-  id            Int         @id @default(autoincrement())
-  icode         String?     @db.VarChar(7)
-  invcode       String?     @db.VarChar(10)
-  mpack         Int
-  unit          String?
-  tr            Int
-  rvalue        Float?      @db.Double
-  yearmonth     String?     @db.VarChar(7)
-  drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
-  @@index([icode, invcode], name: "icode_invcode")
+model totalDrugHosRollbacks {
+  id             Int      @id @default(autoincrement())
+  drugItemCodeId Int
+  beforestock    Int
+  importStock    Int
+  totalStockIn   Int
+  closingdate    DateTime
+  createdAt      DateTime @default(now())
+
+  drugItemCodes drugItemCodes @relation(fields: [drugItemCodeId], references: [id])
+
+  @@index([drugItemCodeId], name: "idx_drugitemcode")
 }
 
+model drugItemStocks {
+  id             Int     @id @default(autoincrement())
+  drugItemCodeId Int?
+  tremain        Int
+  remainvalue    Float?  @db.Double
+  tr             Int
+  rvalue         Float?  @db.Double
+  td             Int
+  dvalue         Float?  @db.Double
+  ttr            Int
+  bal_value      Float   @db.Double
+  yearmonth      String? @db.VarChar(7)
+  closingdate    DateTime
 
-model exportdrugitem{
-  id            Int         @id @default(autoincrement())
-  icode         String?     @db.VarChar(7)
-  invcode       String?     @db.VarChar(10)
-  mpack         Int
-  unit          String?
-  td            Int
-  dvalue        Float?      @db.Double
-  yearmonth     String?     @db.VarChar(7)
-  drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
-  @@index([icode, invcode], name: "icode_invcode")
-}
+  drugItemCodes drugItemCodes? @relation(fields: [drugItemCodeId], references: [id])
 
-
-model balance{
-  id            Int         @id @default(autoincrement())
-  icode         String?     @db.VarChar(7)
-  invcode       String?     @db.VarChar(10)
-  mpack         Int
-  unit          String?
-  ttr           Int
-  bal_value     Float
-  yearmonth     String?     @db.VarChar(7)
-  drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
-  @@index([icode, invcode], name: "icode_invcode")
+  @@index([drugItemCodeId], name: "idx_drugitemcode")
 }
 
 
+
+model transactionDrugRollbacks {
+  id             Int       @id @default(autoincrement())
+  hos_guid       String    @unique @db.VarChar(38)
+  opitemrece     opitemrece @relation(fields: [hos_guid], references: [hos_guid])
+  drugItemCodeId Int
+  drugItemCodes  drugItemCodes @relation(fields: [drugItemCodeId], references: [id])
+  vn             String?   @db.VarChar(13)
+  hn             String?   @db.VarChar(9)
+  an             String?   @db.VarChar(9)
+  icode        String?    @db.VarChar(7)
+  invcode      String?    @db.VarChar(10)
+  unit           String?
+  stockIn        Int
+  stockOut       Int
+  totalStockIn   Int
+  vstdate        DateTime? @db.Date
+
+
+  @@index([drugItemCodeId], map: "idx_drugitemcode")
+}

@@ -1,0 +1,2 @@
+npx prisma generate --schema=./prisma/db1/schema.prisma
+npx prisma generate --schema=./prisma/db2/schema.prisma

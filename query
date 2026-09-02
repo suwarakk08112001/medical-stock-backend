@@ -1,0 +1,115 @@
+CREATE TABLE `drugItemCodes` (
+  `id`      INT           NOT NULL AUTO_INCREMENT,
+  `icode`   VARCHAR(7)    NOT NULL,
+  `invcode` VARCHAR(10)   NOT NULL,
+  `type`    VARCHAR(50)   NOT NULL,
+  `mpack`   INT           NOT NULL,
+  `unit`    VARCHAR(50)   NULL,
+
+  PRIMARY KEY (`id`),
+
+  UNIQUE INDEX `icode_invcode` (`icode`, `invcode`),
+
+  CONSTRAINT `drugItemCodes_icode_invcode_fkey`
+    FOREIGN KEY (`icode`, `invcode`) REFERENCES `drugitems` (`icode`, `invcode`)
+    ON DELETE RESTRICT ON UPDATE CASCADE
+
+) ;
+
+
+-- ═══════════════════════════════════════════════════════════
+-- 2) totalDrugItemHOSs — 1:1 กับ drugItemCodes (unique_drugitemcode บังคับไม่ให้ซ้ำ)
+-- ═══════════════════════════════════════════════════════════
+CREATE TABLE `totalDrugItemHOSs` (
+  `id`             INT NOT NULL AUTO_INCREMENT,
+  `drugItemCodeId` INT NOT NULL,
+  `qty`            INT NOT NULL,
+
+  PRIMARY KEY (`id`),
+
+  UNIQUE INDEX `unique_drugitemcode` (`drugItemCodeId`),
+
+  CONSTRAINT `totalDrugItemHOSs_drugItemCodeId_fkey`
+    FOREIGN KEY (`drugItemCodeId`) REFERENCES `drugItemCodes` (`id`)
+    ON DELETE RESTRICT ON UPDATE CASCADE
+
+) ;
+
+
+-- ═══════════════════════════════════════════════════════════
+-- 3) totalDrugHosRollbacks — 1:many กับ drugItemCodes
+-- ═══════════════════════════════════════════════════════════
+CREATE TABLE `totalDrugHosRollbacks` (
+  `id`             INT         NOT NULL AUTO_INCREMENT,
+  `drugItemCodeId` INT         NOT NULL,
+  `beforestock`    INT         NOT NULL,
+  `importStock`    INT         NOT NULL,
+  `totalStockIn`   INT         NOT NULL,
+  `yearmonth`      VARCHAR(7)  NULL,
+  `createdAt`      DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+  PRIMARY KEY (`id`),
+
+  INDEX `idx_drugitemcode` (`drugItemCodeId`),
+
+  CONSTRAINT `totalDrugHosRollbacks_drugItemCodeId_fkey`
+    FOREIGN KEY (`drugItemCodeId`) REFERENCES `drugItemCodes` (`id`)
+    ON DELETE RESTRICT ON UPDATE CASCADE
+
+);
+
+
+-- ═══════════════════════════════════════════════════════════
+-- 4) drugItemStocks — 1:many กับ drugItemCodes, FK เป็น nullable (Int?)
+-- ═══════════════════════════════════════════════════════════
+CREATE TABLE `drugItemStocks` (
+  `id`             INT         NOT NULL AUTO_INCREMENT,
+  `drugItemCodeId` INT         NULL,
+  `tremain`        INT         NOT NULL,
+  `remainvalue`    DOUBLE      NULL,
+  `tr`             INT         NOT NULL,
+  `rvalue`         DOUBLE      NULL,
+  `td`             INT         NOT NULL,
+  `dvalue`         DOUBLE      NULL,
+  `ttr`            INT         NOT NULL,
+  `bal_value`      DOUBLE      NOT NULL,
+  `yearmonth`      VARCHAR(7)  NULL,
+
+  PRIMARY KEY (`id`),
+
+  INDEX `idx_drugitemcode` (`drugItemCodeId`),
+
+  CONSTRAINT `drugItemStocks_drugItemCodeId_fkey`
+    FOREIGN KEY (`drugItemCodeId`) REFERENCES `drugItemCodes` (`id`)
+    ON DELETE SET NULL ON UPDATE CASCADE
+
+)
+
+CREATE TABLE `transactionDrugRollbacks` (
+  `id`             INT             NOT NULL AUTO_INCREMENT,
+  `hos_guid`       VARCHAR(38)     NOT NULL,
+  `drugItemCodeId` INT             NOT NULL,
+  `vn`             VARCHAR(13)     NULL,
+  `hn`             VARCHAR(9)      NULL,
+  `an`             VARCHAR(9)      NULL,
+  `unit`           VARCHAR(191)    NULL,
+  `stockIn`        INT             NOT NULL,
+  `stockOut`       INT             NOT NULL,
+  `totalStockIn`   INT             NOT NULL,
+  `vstdate`        DATE            NULL,
+
+  PRIMARY KEY (`id`),
+
+  UNIQUE INDEX `transactionDrugRollbacks_hos_guid_key` (`hos_guid`),
+
+  INDEX `idx_drugitemcode` (`drugItemCodeId`),
+
+  CONSTRAINT `transactionDrugRollbacks_hos_guid_fkey`
+    FOREIGN KEY (`hos_guid`) REFERENCES `opitemrece` (`hos_guid`)
+    ON DELETE RESTRICT ON UPDATE CASCADE,
+
+  CONSTRAINT `transactionDrugRollbacks_drugItemCodeId_fkey`
+    FOREIGN KEY (`drugItemCodeId`) REFERENCES `drugItemCodes` (`id`)
+    ON DELETE RESTRICT ON UPDATE CASCADE
+
+);

@@ -53,7 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   drugitems: 'drugitems',
   opitemrece: 'opitemrece',
-  drugitemcode: 'drugitemcode'
+  drugitemcode: 'drugitemcode',
+  TransactionDrugRollBack: 'TransactionDrugRollBack'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -336,6 +337,24 @@ export const DrugitemcodeScalarFieldEnum = {
 export type DrugitemcodeScalarFieldEnum = (typeof DrugitemcodeScalarFieldEnum)[keyof typeof DrugitemcodeScalarFieldEnum]
 
 
+export const TransactionDrugRollBackScalarFieldEnum = {
+  id: 'id',
+  hos_guid: 'hos_guid',
+  vn: 'vn',
+  hn: 'hn',
+  an: 'an',
+  icode: 'icode',
+  invcode: 'invcode',
+  unit: 'unit',
+  stockIn: 'stockIn',
+  stockOut: 'stockOut',
+  totalStockIn: 'totalStockIn',
+  vstdate: 'vstdate'
+} as const
+
+export type TransactionDrugRollBackScalarFieldEnum = (typeof TransactionDrugRollBackScalarFieldEnum)[keyof typeof TransactionDrugRollBackScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -530,4 +549,17 @@ export const drugitemcodeOrderByRelevanceFieldEnum = {
 } as const
 
 export type drugitemcodeOrderByRelevanceFieldEnum = (typeof drugitemcodeOrderByRelevanceFieldEnum)[keyof typeof drugitemcodeOrderByRelevanceFieldEnum]
+
+
+export const TransactionDrugRollBackOrderByRelevanceFieldEnum = {
+  hos_guid: 'hos_guid',
+  vn: 'vn',
+  hn: 'hn',
+  an: 'an',
+  icode: 'icode',
+  invcode: 'invcode',
+  unit: 'unit'
+} as const
+
+export type TransactionDrugRollBackOrderByRelevanceFieldEnum = (typeof TransactionDrugRollBackOrderByRelevanceFieldEnum)[keyof typeof TransactionDrugRollBackOrderByRelevanceFieldEnum]
 

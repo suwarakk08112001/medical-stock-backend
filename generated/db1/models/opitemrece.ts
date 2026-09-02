@@ -544,6 +544,7 @@ export type opitemreceWhereInput = {
   stock_department_id?: Prisma.IntNullableFilter<"opitemrece"> | number | null
   command_doctor?: Prisma.StringNullableFilter<"opitemrece"> | string | null
   opi_doctor_finance_type_id?: Prisma.IntNullableFilter<"opitemrece"> | number | null
+  transactionDrugRollbacks?: Prisma.TransactionDrugRollbacksListRelationFilter
 }
 
 export type opitemreceOrderByWithRelationInput = {
@@ -588,6 +589,7 @@ export type opitemreceOrderByWithRelationInput = {
   stock_department_id?: Prisma.SortOrderInput | Prisma.SortOrder
   command_doctor?: Prisma.SortOrderInput | Prisma.SortOrder
   opi_doctor_finance_type_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  transactionDrugRollbacks?: Prisma.transactionDrugRollbacksOrderByRelationAggregateInput
   _relevance?: Prisma.opitemreceOrderByRelevanceInput
 }
 
@@ -636,6 +638,7 @@ export type opitemreceWhereUniqueInput = Prisma.AtLeast<{
   stock_department_id?: Prisma.IntNullableFilter<"opitemrece"> | number | null
   command_doctor?: Prisma.StringNullableFilter<"opitemrece"> | string | null
   opi_doctor_finance_type_id?: Prisma.IntNullableFilter<"opitemrece"> | number | null
+  transactionDrugRollbacks?: Prisma.TransactionDrugRollbacksListRelationFilter
 }, "hos_guid">
 
 export type opitemreceOrderByWithAggregationInput = {
@@ -776,6 +779,7 @@ export type opitemreceCreateInput = {
   stock_department_id?: number | null
   command_doctor?: string | null
   opi_doctor_finance_type_id?: number | null
+  transactionDrugRollbacks?: Prisma.transactionDrugRollbacksCreateNestedManyWithoutOpitemreceInput
 }
 
 export type opitemreceUncheckedCreateInput = {
@@ -820,6 +824,7 @@ export type opitemreceUncheckedCreateInput = {
   stock_department_id?: number | null
   command_doctor?: string | null
   opi_doctor_finance_type_id?: number | null
+  transactionDrugRollbacks?: Prisma.transactionDrugRollbacksUncheckedCreateNestedManyWithoutOpitemreceInput
 }
 
 export type opitemreceUpdateInput = {
@@ -864,6 +869,7 @@ export type opitemreceUpdateInput = {
   stock_department_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   command_doctor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opi_doctor_finance_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  transactionDrugRollbacks?: Prisma.transactionDrugRollbacksUpdateManyWithoutOpitemreceNestedInput
 }
 
 export type opitemreceUncheckedUpdateInput = {
@@ -908,6 +914,7 @@ export type opitemreceUncheckedUpdateInput = {
   stock_department_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   command_doctor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   opi_doctor_finance_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  transactionDrugRollbacks?: Prisma.transactionDrugRollbacksUncheckedUpdateManyWithoutOpitemreceNestedInput
 }
 
 export type opitemreceCreateManyInput = {
@@ -1208,6 +1215,246 @@ export type opitemreceSumOrderByAggregateInput = {
   opi_doctor_finance_type_id?: Prisma.SortOrder
 }
 
+export type OpitemreceScalarRelationFilter = {
+  is?: Prisma.opitemreceWhereInput
+  isNot?: Prisma.opitemreceWhereInput
+}
+
+export type opitemreceCreateNestedOneWithoutTransactionDrugRollbacksInput = {
+  create?: Prisma.XOR<Prisma.opitemreceCreateWithoutTransactionDrugRollbacksInput, Prisma.opitemreceUncheckedCreateWithoutTransactionDrugRollbacksInput>
+  connectOrCreate?: Prisma.opitemreceCreateOrConnectWithoutTransactionDrugRollbacksInput
+  connect?: Prisma.opitemreceWhereUniqueInput
+}
+
+export type opitemreceUpdateOneRequiredWithoutTransactionDrugRollbacksNestedInput = {
+  create?: Prisma.XOR<Prisma.opitemreceCreateWithoutTransactionDrugRollbacksInput, Prisma.opitemreceUncheckedCreateWithoutTransactionDrugRollbacksInput>
+  connectOrCreate?: Prisma.opitemreceCreateOrConnectWithoutTransactionDrugRollbacksInput
+  upsert?: Prisma.opitemreceUpsertWithoutTransactionDrugRollbacksInput
+  connect?: Prisma.opitemreceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.opitemreceUpdateToOneWithWhereWithoutTransactionDrugRollbacksInput, Prisma.opitemreceUpdateWithoutTransactionDrugRollbacksInput>, Prisma.opitemreceUncheckedUpdateWithoutTransactionDrugRollbacksInput>
+}
+
+export type opitemreceCreateWithoutTransactionDrugRollbacksInput = {
+  hos_guid: string
+  vn?: string | null
+  hn?: string | null
+  an?: string | null
+  icode?: string | null
+  qty?: number | null
+  drugusage?: string | null
+  idr?: string | null
+  iperday?: number | null
+  iperdose?: number | null
+  recetime?: Date | string | null
+  unitprice?: number | null
+  vstdate?: Date | string | null
+  vsttime?: Date | string | null
+  doctor?: string | null
+  rxdate?: Date | string | null
+  rxtime?: Date | string | null
+  sp_use?: string | null
+  hcode?: string | null
+  print?: string | null
+  dep_code?: string | null
+  finance_number?: string | null
+  discount?: number | null
+  use_right?: string | null
+  node_id?: string | null
+  order_no?: number | null
+  sub_type?: string | null
+  pttype?: string | null
+  income?: string | null
+  remain?: string | null
+  item_type?: string | null
+  staff?: string | null
+  doctor_lock?: string | null
+  paidst?: string | null
+  item_no?: number | null
+  last_modified?: Date | string | null
+  sum_price?: number | null
+  cost?: number | null
+  stock_department_id?: number | null
+  command_doctor?: string | null
+  opi_doctor_finance_type_id?: number | null
+}
+
+export type opitemreceUncheckedCreateWithoutTransactionDrugRollbacksInput = {
+  hos_guid: string
+  vn?: string | null
+  hn?: string | null
+  an?: string | null
+  icode?: string | null
+  qty?: number | null
+  drugusage?: string | null
+  idr?: string | null
+  iperday?: number | null
+  iperdose?: number | null
+  recetime?: Date | string | null
+  unitprice?: number | null
+  vstdate?: Date | string | null
+  vsttime?: Date | string | null
+  doctor?: string | null
+  rxdate?: Date | string | null
+  rxtime?: Date | string | null
+  sp_use?: string | null
+  hcode?: string | null
+  print?: string | null
+  dep_code?: string | null
+  finance_number?: string | null
+  discount?: number | null
+  use_right?: string | null
+  node_id?: string | null
+  order_no?: number | null
+  sub_type?: string | null
+  pttype?: string | null
+  income?: string | null
+  remain?: string | null
+  item_type?: string | null
+  staff?: string | null
+  doctor_lock?: string | null
+  paidst?: string | null
+  item_no?: number | null
+  last_modified?: Date | string | null
+  sum_price?: number | null
+  cost?: number | null
+  stock_department_id?: number | null
+  command_doctor?: string | null
+  opi_doctor_finance_type_id?: number | null
+}
+
+export type opitemreceCreateOrConnectWithoutTransactionDrugRollbacksInput = {
+  where: Prisma.opitemreceWhereUniqueInput
+  create: Prisma.XOR<Prisma.opitemreceCreateWithoutTransactionDrugRollbacksInput, Prisma.opitemreceUncheckedCreateWithoutTransactionDrugRollbacksInput>
+}
+
+export type opitemreceUpsertWithoutTransactionDrugRollbacksInput = {
+  update: Prisma.XOR<Prisma.opitemreceUpdateWithoutTransactionDrugRollbacksInput, Prisma.opitemreceUncheckedUpdateWithoutTransactionDrugRollbacksInput>
+  create: Prisma.XOR<Prisma.opitemreceCreateWithoutTransactionDrugRollbacksInput, Prisma.opitemreceUncheckedCreateWithoutTransactionDrugRollbacksInput>
+  where?: Prisma.opitemreceWhereInput
+}
+
+export type opitemreceUpdateToOneWithWhereWithoutTransactionDrugRollbacksInput = {
+  where?: Prisma.opitemreceWhereInput
+  data: Prisma.XOR<Prisma.opitemreceUpdateWithoutTransactionDrugRollbacksInput, Prisma.opitemreceUncheckedUpdateWithoutTransactionDrugRollbacksInput>
+}
+
+export type opitemreceUpdateWithoutTransactionDrugRollbacksInput = {
+  hos_guid?: Prisma.StringFieldUpdateOperationsInput | string
+  vn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  an?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugusage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iperday?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  iperdose?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  recetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  unitprice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  vstdate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  vsttime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  doctor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rxdate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rxtime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sp_use?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dep_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finance_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  use_right?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  node_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order_no?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sub_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pttype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  income?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staff?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doctor_lock?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_no?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  last_modified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sum_price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stock_department_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  command_doctor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  opi_doctor_finance_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type opitemreceUncheckedUpdateWithoutTransactionDrugRollbacksInput = {
+  hos_guid?: Prisma.StringFieldUpdateOperationsInput | string
+  vn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hn?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  an?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugusage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  iperday?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  iperdose?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  recetime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  unitprice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  vstdate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  vsttime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  doctor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rxdate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rxtime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sp_use?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dep_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finance_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  discount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  use_right?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  node_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  order_no?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sub_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pttype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  income?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  remain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  staff?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doctor_lock?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_no?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  last_modified?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sum_price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stock_department_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  command_doctor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  opi_doctor_finance_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+
+/**
+ * Count Type OpitemreceCountOutputType
+ */
+
+export type OpitemreceCountOutputType = {
+  transactionDrugRollbacks: number
+}
+
+export type OpitemreceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  transactionDrugRollbacks?: boolean | OpitemreceCountOutputTypeCountTransactionDrugRollbacksArgs
+}
+
+/**
+ * OpitemreceCountOutputType without action
+ */
+export type OpitemreceCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OpitemreceCountOutputType
+   */
+  select?: Prisma.OpitemreceCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * OpitemreceCountOutputType without action
+ */
+export type OpitemreceCountOutputTypeCountTransactionDrugRollbacksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.transactionDrugRollbacksWhereInput
+}
 
 
 export type opitemreceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1252,6 +1499,8 @@ export type opitemreceSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   stock_department_id?: boolean
   command_doctor?: boolean
   opi_doctor_finance_type_id?: boolean
+  transactionDrugRollbacks?: boolean | Prisma.opitemrece$transactionDrugRollbacksArgs<ExtArgs>
+  _count?: boolean | Prisma.OpitemreceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["opitemrece"]>
 
 
@@ -1301,10 +1550,16 @@ export type opitemreceSelectScalar = {
 }
 
 export type opitemreceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"hos_guid" | "vn" | "hn" | "an" | "icode" | "qty" | "drugusage" | "idr" | "iperday" | "iperdose" | "recetime" | "unitprice" | "vstdate" | "vsttime" | "doctor" | "rxdate" | "rxtime" | "sp_use" | "hcode" | "print" | "dep_code" | "finance_number" | "discount" | "use_right" | "node_id" | "order_no" | "sub_type" | "pttype" | "income" | "remain" | "item_type" | "staff" | "doctor_lock" | "paidst" | "item_no" | "last_modified" | "sum_price" | "cost" | "stock_department_id" | "command_doctor" | "opi_doctor_finance_type_id", ExtArgs["result"]["opitemrece"]>
+export type opitemreceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  transactionDrugRollbacks?: boolean | Prisma.opitemrece$transactionDrugRollbacksArgs<ExtArgs>
+  _count?: boolean | Prisma.OpitemreceCountOutputTypeDefaultArgs<ExtArgs>
+}
 
 export type $opitemrecePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "opitemrece"
-  objects: {}
+  objects: {
+    transactionDrugRollbacks: Prisma.$transactionDrugRollbacksPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     hos_guid: string
     vn: string | null
@@ -1687,6 +1942,7 @@ readonly fields: opitemreceFieldRefs;
  */
 export interface Prisma__opitemreceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  transactionDrugRollbacks<T extends Prisma.opitemrece$transactionDrugRollbacksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.opitemrece$transactionDrugRollbacksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$transactionDrugRollbacksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1774,6 +2030,10 @@ export type opitemreceFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.opitemreceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.opitemreceInclude<ExtArgs> | null
+  /**
    * Filter, which opitemrece to fetch.
    */
   where: Prisma.opitemreceWhereUniqueInput
@@ -1792,6 +2052,10 @@ export type opitemreceFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extens
    */
   omit?: Prisma.opitemreceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.opitemreceInclude<ExtArgs> | null
+  /**
    * Filter, which opitemrece to fetch.
    */
   where: Prisma.opitemreceWhereUniqueInput
@@ -1809,6 +2073,10 @@ export type opitemreceFindFirstArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Omit specific fields from the opitemrece
    */
   omit?: Prisma.opitemreceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.opitemreceInclude<ExtArgs> | null
   /**
    * Filter, which opitemrece to fetch.
    */
@@ -1858,6 +2126,10 @@ export type opitemreceFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.opitemreceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.opitemreceInclude<ExtArgs> | null
+  /**
    * Filter, which opitemrece to fetch.
    */
   where?: Prisma.opitemreceWhereInput
@@ -1905,6 +2177,10 @@ export type opitemreceFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Omit specific fields from the opitemrece
    */
   omit?: Prisma.opitemreceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.opitemreceInclude<ExtArgs> | null
   /**
    * Filter, which opitemreces to fetch.
    */
@@ -1954,6 +2230,10 @@ export type opitemreceCreateArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   omit?: Prisma.opitemreceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.opitemreceInclude<ExtArgs> | null
+  /**
    * The data needed to create a opitemrece.
    */
   data: Prisma.XOR<Prisma.opitemreceCreateInput, Prisma.opitemreceUncheckedCreateInput>
@@ -1982,6 +2262,10 @@ export type opitemreceUpdateArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Omit specific fields from the opitemrece
    */
   omit?: Prisma.opitemreceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.opitemreceInclude<ExtArgs> | null
   /**
    * The data needed to update a opitemrece.
    */
@@ -2023,6 +2307,10 @@ export type opitemreceUpsertArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   omit?: Prisma.opitemreceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.opitemreceInclude<ExtArgs> | null
+  /**
    * The filter to search for the opitemrece to update in case it exists.
    */
   where: Prisma.opitemreceWhereUniqueInput
@@ -2049,6 +2337,10 @@ export type opitemreceDeleteArgs<ExtArgs extends runtime.Types.Extensions.Intern
    */
   omit?: Prisma.opitemreceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.opitemreceInclude<ExtArgs> | null
+  /**
    * Filter which opitemrece to delete.
    */
   where: Prisma.opitemreceWhereUniqueInput
@@ -2069,6 +2361,30 @@ export type opitemreceDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
+ * opitemrece.transactionDrugRollbacks
+ */
+export type opitemrece$transactionDrugRollbacksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the transactionDrugRollbacks
+   */
+  select?: Prisma.transactionDrugRollbacksSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the transactionDrugRollbacks
+   */
+  omit?: Prisma.transactionDrugRollbacksOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.transactionDrugRollbacksInclude<ExtArgs> | null
+  where?: Prisma.transactionDrugRollbacksWhereInput
+  orderBy?: Prisma.transactionDrugRollbacksOrderByWithRelationInput | Prisma.transactionDrugRollbacksOrderByWithRelationInput[]
+  cursor?: Prisma.transactionDrugRollbacksWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TransactionDrugRollbacksScalarFieldEnum | Prisma.TransactionDrugRollbacksScalarFieldEnum[]
+}
+
+/**
  * opitemrece without action
  */
 export type opitemreceDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2080,4 +2396,8 @@ export type opitemreceDefaultArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Omit specific fields from the opitemrece
    */
   omit?: Prisma.opitemreceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.opitemreceInclude<ExtArgs> | null
 }

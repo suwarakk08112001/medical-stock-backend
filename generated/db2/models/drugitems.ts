@@ -2012,6 +2012,7 @@ export type drugitemsWhereInput = {
   need_presc_duration?: Prisma.StringNullableFilter<"drugitems"> | string | null
   ttmt_code?: Prisma.StringNullableFilter<"drugitems"> | string | null
   lock_dispense_qty_opd?: Prisma.StringNullableFilter<"drugitems"> | string | null
+  transactionDrugRollBack?: Prisma.TransactionDrugRollBackListRelationFilter
   drugitemcode?: Prisma.DrugitemcodeListRelationFilter
 }
 
@@ -2216,6 +2217,7 @@ export type drugitemsOrderByWithRelationInput = {
   need_presc_duration?: Prisma.SortOrderInput | Prisma.SortOrder
   ttmt_code?: Prisma.SortOrderInput | Prisma.SortOrder
   lock_dispense_qty_opd?: Prisma.SortOrderInput | Prisma.SortOrder
+  transactionDrugRollBack?: Prisma.TransactionDrugRollBackOrderByRelationAggregateInput
   drugitemcode?: Prisma.drugitemcodeOrderByRelationAggregateInput
   _relevance?: Prisma.drugitemsOrderByRelevanceInput
 }
@@ -2425,6 +2427,7 @@ export type drugitemsWhereUniqueInput = Prisma.AtLeast<{
   need_presc_duration?: Prisma.StringNullableFilter<"drugitems"> | string | null
   ttmt_code?: Prisma.StringNullableFilter<"drugitems"> | string | null
   lock_dispense_qty_opd?: Prisma.StringNullableFilter<"drugitems"> | string | null
+  transactionDrugRollBack?: Prisma.TransactionDrugRollBackListRelationFilter
   drugitemcode?: Prisma.DrugitemcodeListRelationFilter
 }, "icode" | "icode_invcode">
 
@@ -3043,6 +3046,7 @@ export type drugitemsCreateInput = {
   need_presc_duration?: string | null
   ttmt_code?: string | null
   lock_dispense_qty_opd?: string | null
+  transactionDrugRollBack?: Prisma.TransactionDrugRollBackCreateNestedManyWithoutDrugitemInput
   drugitemcode?: Prisma.drugitemcodeCreateNestedManyWithoutDrugitemInput
 }
 
@@ -3247,6 +3251,7 @@ export type drugitemsUncheckedCreateInput = {
   need_presc_duration?: string | null
   ttmt_code?: string | null
   lock_dispense_qty_opd?: string | null
+  transactionDrugRollBack?: Prisma.TransactionDrugRollBackUncheckedCreateNestedManyWithoutDrugitemInput
   drugitemcode?: Prisma.drugitemcodeUncheckedCreateNestedManyWithoutDrugitemInput
 }
 
@@ -3451,6 +3456,7 @@ export type drugitemsUpdateInput = {
   need_presc_duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ttmt_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lock_dispense_qty_opd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionDrugRollBack?: Prisma.TransactionDrugRollBackUpdateManyWithoutDrugitemNestedInput
   drugitemcode?: Prisma.drugitemcodeUpdateManyWithoutDrugitemNestedInput
 }
 
@@ -3655,6 +3661,7 @@ export type drugitemsUncheckedUpdateInput = {
   need_presc_duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ttmt_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lock_dispense_qty_opd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionDrugRollBack?: Prisma.TransactionDrugRollBackUncheckedUpdateManyWithoutDrugitemNestedInput
   drugitemcode?: Prisma.drugitemcodeUncheckedUpdateManyWithoutDrugitemNestedInput
 }
 
@@ -5018,6 +5025,11 @@ export type DrugitemsScalarRelationFilter = {
   isNot?: Prisma.drugitemsWhereInput
 }
 
+export type DrugitemsNullableScalarRelationFilter = {
+  is?: Prisma.drugitemsWhereInput | null
+  isNot?: Prisma.drugitemsWhereInput | null
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -5058,6 +5070,22 @@ export type drugitemsUpdateOneRequiredWithoutDrugitemcodeNestedInput = {
   upsert?: Prisma.drugitemsUpsertWithoutDrugitemcodeInput
   connect?: Prisma.drugitemsWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.drugitemsUpdateToOneWithWhereWithoutDrugitemcodeInput, Prisma.drugitemsUpdateWithoutDrugitemcodeInput>, Prisma.drugitemsUncheckedUpdateWithoutDrugitemcodeInput>
+}
+
+export type drugitemsCreateNestedOneWithoutTransactionDrugRollBackInput = {
+  create?: Prisma.XOR<Prisma.drugitemsCreateWithoutTransactionDrugRollBackInput, Prisma.drugitemsUncheckedCreateWithoutTransactionDrugRollBackInput>
+  connectOrCreate?: Prisma.drugitemsCreateOrConnectWithoutTransactionDrugRollBackInput
+  connect?: Prisma.drugitemsWhereUniqueInput
+}
+
+export type drugitemsUpdateOneWithoutTransactionDrugRollBackNestedInput = {
+  create?: Prisma.XOR<Prisma.drugitemsCreateWithoutTransactionDrugRollBackInput, Prisma.drugitemsUncheckedCreateWithoutTransactionDrugRollBackInput>
+  connectOrCreate?: Prisma.drugitemsCreateOrConnectWithoutTransactionDrugRollBackInput
+  upsert?: Prisma.drugitemsUpsertWithoutTransactionDrugRollBackInput
+  disconnect?: Prisma.drugitemsWhereInput | boolean
+  delete?: Prisma.drugitemsWhereInput | boolean
+  connect?: Prisma.drugitemsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.drugitemsUpdateToOneWithWhereWithoutTransactionDrugRollBackInput, Prisma.drugitemsUpdateWithoutTransactionDrugRollBackInput>, Prisma.drugitemsUncheckedUpdateWithoutTransactionDrugRollBackInput>
 }
 
 export type drugitemsCreateWithoutDrugitemcodeInput = {
@@ -5261,6 +5289,7 @@ export type drugitemsCreateWithoutDrugitemcodeInput = {
   need_presc_duration?: string | null
   ttmt_code?: string | null
   lock_dispense_qty_opd?: string | null
+  transactionDrugRollBack?: Prisma.TransactionDrugRollBackCreateNestedManyWithoutDrugitemInput
 }
 
 export type drugitemsUncheckedCreateWithoutDrugitemcodeInput = {
@@ -5464,6 +5493,7 @@ export type drugitemsUncheckedCreateWithoutDrugitemcodeInput = {
   need_presc_duration?: string | null
   ttmt_code?: string | null
   lock_dispense_qty_opd?: string | null
+  transactionDrugRollBack?: Prisma.TransactionDrugRollBackUncheckedCreateNestedManyWithoutDrugitemInput
 }
 
 export type drugitemsCreateOrConnectWithoutDrugitemcodeInput = {
@@ -5683,6 +5713,7 @@ export type drugitemsUpdateWithoutDrugitemcodeInput = {
   need_presc_duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ttmt_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lock_dispense_qty_opd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionDrugRollBack?: Prisma.TransactionDrugRollBackUpdateManyWithoutDrugitemNestedInput
 }
 
 export type drugitemsUncheckedUpdateWithoutDrugitemcodeInput = {
@@ -5886,6 +5917,839 @@ export type drugitemsUncheckedUpdateWithoutDrugitemcodeInput = {
   need_presc_duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ttmt_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   lock_dispense_qty_opd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactionDrugRollBack?: Prisma.TransactionDrugRollBackUncheckedUpdateManyWithoutDrugitemNestedInput
+}
+
+export type drugitemsCreateWithoutTransactionDrugRollBackInput = {
+  icode: string
+  name?: string | null
+  strength?: string | null
+  units?: string | null
+  unitprice?: number | null
+  dosageform?: string | null
+  criticalpriority?: number | null
+  drugaccount?: string | null
+  drugcategory?: string | null
+  drugnote?: string | null
+  hintcode?: string | null
+  istatus?: string | null
+  lastupdatestdprice?: Date | string | null
+  lockprice?: string | null
+  lockprint?: string | null
+  maxlevel?: number | null
+  minlevel?: number | null
+  maxunitperdose?: number | null
+  packqty?: number | null
+  reorderqty?: number | null
+  stdprice?: number | null
+  stdtaken?: string | null
+  therapeutic?: string | null
+  therapeuticgroup?: string | null
+  default_qty?: number | null
+  gpo_code?: string | null
+  use_right?: string | null
+  i_type?: string | null
+  drugusage?: string | null
+  high_cost?: string | null
+  must_paid?: string | null
+  alert_level?: number | null
+  access_level?: number | null
+  sticker_short_name?: string | null
+  paidst?: string | null
+  antibiotic?: string | null
+  displaycolor?: number | null
+  empty?: string | null
+  empty_text?: string | null
+  unitcost?: number | null
+  gfmiscode?: string | null
+  ipd_price?: number | null
+  oldcode?: string | null
+  habit_forming?: string | null
+  did?: string | null
+  stock_type?: string | null
+  price2?: number | null
+  price3?: number | null
+  ipd_price2?: number | null
+  ipd_price3?: number | null
+  price_lock?: string | null
+  pregnancy?: string | null
+  pharmacology_group1?: number | null
+  pharmacology_group2?: number | null
+  pharmacology_group3?: number | null
+  generic_name?: string | null
+  show_pregnancy_alert?: string | null
+  icode_guid?: string | null
+  na?: string | null
+  invcode?: string | null
+  check_user_group?: string | null
+  check_user_name?: string | null
+  show_notify?: string | null
+  show_notify_text?: string | null
+  income?: string | null
+  print_sticker_pq?: string | null
+  charge_service_opd?: string | null
+  charge_service_ipd?: string | null
+  ename?: string | null
+  dose_type?: string | null
+  habit_forming_type?: number | null
+  no_discount?: string | null
+  therapeutic_eng?: string | null
+  hintcode_eng?: string | null
+  limit_drugusage?: string | null
+  print_sticker_header?: string | null
+  calc_idr_qty?: string | null
+  item_in_hospital?: string | null
+  no_substock?: string | null
+  volume_cc?: number | null
+  usage_code?: string | null
+  frequency_code?: string | null
+  time_code?: string | null
+  dispense_dose?: number | null
+  usage_unit_code?: string | null
+  dose_per_units?: number | null
+  ipd_default_pay?: number | null
+  billcode?: string | null
+  billnumber?: string | null
+  lockprint_ipd?: string | null
+  pregnancy_notify_text?: string | null
+  show_breast_feeding_alert?: string | null
+  breast_feeding_alert_text?: string | null
+  show_child_notify?: string | null
+  child_notify_text?: string | null
+  child_notify_min_age?: number | null
+  child_notify_max_age?: number | null
+  continuous?: string | null
+  substitute_icode?: string | null
+  trade_name?: string | null
+  use_right_allow?: string | null
+  medication_machine_id?: number | null
+  ipd_medication_machine_id?: number | null
+  check_remed_qty?: string | null
+  addict?: string | null
+  addict_type_id?: number | null
+  medication_machine_opd_no?: number | null
+  medication_machine_ipd_no?: number | null
+  fp_drug?: string | null
+  usage_code_ipd?: string | null
+  dispense_dose_ipd?: number | null
+  usage_unit_code_ipd?: string | null
+  frequency_code_ipd?: string | null
+  time_code_ipd?: string | null
+  print_ipd_injection_sticker?: string | null
+  provis_medication_unit_code?: string | null
+  hos_guid?: string | null
+  sks_product_category_id?: number | null
+  sks_clain_control_type_id?: number | null
+  sks_drug_code?: string | null
+  sks_dfs_code?: string | null
+  sks_dfs_text?: string | null
+  sks_reimb_price?: number | null
+  hos_guid_ext?: string | null
+  check_druginteraction_history?: string | null
+  check_druginteraction_history_day?: number | null
+  nhso_adp_type_id?: number | null
+  nhso_adp_code?: string | null
+  sks_claim_control_type_id?: number | null
+  begin_date?: Date | string | null
+  finish_date?: Date | string | null
+  name_pr?: string | null
+  name_eng?: string | null
+  capacity_name?: string | null
+  finish_reason?: string | null
+  extra_unitcost?: number | null
+  drug_control_type_id?: number | null
+  name_print?: string | null
+  active_ingredient_mg?: number | null
+  no_order_g6pd?: string | null
+  gender_check?: string | null
+  no_order_gender?: string | null
+  max_qty?: number | null
+  prefer_opd_usage_code?: string | null
+  capacity_qty?: number | null
+  need_order_reason?: string | null
+  drugitems_due_type_id?: number | null
+  drugeval_head_id?: number | null
+  light_protect?: string | null
+  tpu_code_list?: string | null
+  inv_map_update?: string | null
+  special_advice_text?: string | null
+  precaution_advice_text?: string | null
+  contra_advice_text?: string | null
+  storage_advice_text?: string | null
+  qr_code_url?: string | null
+  vat_percent?: number | null
+  acc_regist?: string | null
+  use_paidst?: string | null
+  thai_name?: string | null
+  fwf_item_id?: number | null
+  drugitems_em1_id?: number | null
+  drugitems_em2_id?: number | null
+  drugitems_em3_id?: number | null
+  drugitems_em4_id?: number | null
+  tmt_tp_code?: string | null
+  tmt_gp_code?: string | null
+  limit_pttype?: string | null
+  noshow_narcotic?: string | null
+  medication_machine_flag?: string | null
+  sks_price?: number | null
+  print_sticker_by_frequency?: string | null
+  print_sticker_pq_ipd?: string | null
+  sub_income?: string | null
+  prefer_ipd_usage_code?: string | null
+  default_qty_ipd?: number | null
+  max_qty_ipd?: number | null
+  drugusage_ipd?: string | null
+  no_popup_ipd_reason?: string | null
+  specprep?: string | null
+  med_dose_calc_type_id?: number | null
+  send_line_notify?: string | null
+  show_qrcode_trade?: string | null
+  warn_g6pd?: string | null
+  ipd_rx_freq_day?: number | null
+  displaycolor_focus?: number | null
+  last_update?: Date | string | null
+  no_remed?: string | null
+  force_round_qty?: string | null
+  atc_code?: string | null
+  state_item_id?: number | null
+  multiply_charge_service?: string | null
+  csmbs_claim_cat?: string | null
+  simb_2005?: string | null
+  sks_rev_date?: Date | string | null
+  sct_unit_code?: string | null
+  print_label?: string | null
+  need_presc_duration?: string | null
+  ttmt_code?: string | null
+  lock_dispense_qty_opd?: string | null
+  drugitemcode?: Prisma.drugitemcodeCreateNestedManyWithoutDrugitemInput
+}
+
+export type drugitemsUncheckedCreateWithoutTransactionDrugRollBackInput = {
+  icode: string
+  name?: string | null
+  strength?: string | null
+  units?: string | null
+  unitprice?: number | null
+  dosageform?: string | null
+  criticalpriority?: number | null
+  drugaccount?: string | null
+  drugcategory?: string | null
+  drugnote?: string | null
+  hintcode?: string | null
+  istatus?: string | null
+  lastupdatestdprice?: Date | string | null
+  lockprice?: string | null
+  lockprint?: string | null
+  maxlevel?: number | null
+  minlevel?: number | null
+  maxunitperdose?: number | null
+  packqty?: number | null
+  reorderqty?: number | null
+  stdprice?: number | null
+  stdtaken?: string | null
+  therapeutic?: string | null
+  therapeuticgroup?: string | null
+  default_qty?: number | null
+  gpo_code?: string | null
+  use_right?: string | null
+  i_type?: string | null
+  drugusage?: string | null
+  high_cost?: string | null
+  must_paid?: string | null
+  alert_level?: number | null
+  access_level?: number | null
+  sticker_short_name?: string | null
+  paidst?: string | null
+  antibiotic?: string | null
+  displaycolor?: number | null
+  empty?: string | null
+  empty_text?: string | null
+  unitcost?: number | null
+  gfmiscode?: string | null
+  ipd_price?: number | null
+  oldcode?: string | null
+  habit_forming?: string | null
+  did?: string | null
+  stock_type?: string | null
+  price2?: number | null
+  price3?: number | null
+  ipd_price2?: number | null
+  ipd_price3?: number | null
+  price_lock?: string | null
+  pregnancy?: string | null
+  pharmacology_group1?: number | null
+  pharmacology_group2?: number | null
+  pharmacology_group3?: number | null
+  generic_name?: string | null
+  show_pregnancy_alert?: string | null
+  icode_guid?: string | null
+  na?: string | null
+  invcode?: string | null
+  check_user_group?: string | null
+  check_user_name?: string | null
+  show_notify?: string | null
+  show_notify_text?: string | null
+  income?: string | null
+  print_sticker_pq?: string | null
+  charge_service_opd?: string | null
+  charge_service_ipd?: string | null
+  ename?: string | null
+  dose_type?: string | null
+  habit_forming_type?: number | null
+  no_discount?: string | null
+  therapeutic_eng?: string | null
+  hintcode_eng?: string | null
+  limit_drugusage?: string | null
+  print_sticker_header?: string | null
+  calc_idr_qty?: string | null
+  item_in_hospital?: string | null
+  no_substock?: string | null
+  volume_cc?: number | null
+  usage_code?: string | null
+  frequency_code?: string | null
+  time_code?: string | null
+  dispense_dose?: number | null
+  usage_unit_code?: string | null
+  dose_per_units?: number | null
+  ipd_default_pay?: number | null
+  billcode?: string | null
+  billnumber?: string | null
+  lockprint_ipd?: string | null
+  pregnancy_notify_text?: string | null
+  show_breast_feeding_alert?: string | null
+  breast_feeding_alert_text?: string | null
+  show_child_notify?: string | null
+  child_notify_text?: string | null
+  child_notify_min_age?: number | null
+  child_notify_max_age?: number | null
+  continuous?: string | null
+  substitute_icode?: string | null
+  trade_name?: string | null
+  use_right_allow?: string | null
+  medication_machine_id?: number | null
+  ipd_medication_machine_id?: number | null
+  check_remed_qty?: string | null
+  addict?: string | null
+  addict_type_id?: number | null
+  medication_machine_opd_no?: number | null
+  medication_machine_ipd_no?: number | null
+  fp_drug?: string | null
+  usage_code_ipd?: string | null
+  dispense_dose_ipd?: number | null
+  usage_unit_code_ipd?: string | null
+  frequency_code_ipd?: string | null
+  time_code_ipd?: string | null
+  print_ipd_injection_sticker?: string | null
+  provis_medication_unit_code?: string | null
+  hos_guid?: string | null
+  sks_product_category_id?: number | null
+  sks_clain_control_type_id?: number | null
+  sks_drug_code?: string | null
+  sks_dfs_code?: string | null
+  sks_dfs_text?: string | null
+  sks_reimb_price?: number | null
+  hos_guid_ext?: string | null
+  check_druginteraction_history?: string | null
+  check_druginteraction_history_day?: number | null
+  nhso_adp_type_id?: number | null
+  nhso_adp_code?: string | null
+  sks_claim_control_type_id?: number | null
+  begin_date?: Date | string | null
+  finish_date?: Date | string | null
+  name_pr?: string | null
+  name_eng?: string | null
+  capacity_name?: string | null
+  finish_reason?: string | null
+  extra_unitcost?: number | null
+  drug_control_type_id?: number | null
+  name_print?: string | null
+  active_ingredient_mg?: number | null
+  no_order_g6pd?: string | null
+  gender_check?: string | null
+  no_order_gender?: string | null
+  max_qty?: number | null
+  prefer_opd_usage_code?: string | null
+  capacity_qty?: number | null
+  need_order_reason?: string | null
+  drugitems_due_type_id?: number | null
+  drugeval_head_id?: number | null
+  light_protect?: string | null
+  tpu_code_list?: string | null
+  inv_map_update?: string | null
+  special_advice_text?: string | null
+  precaution_advice_text?: string | null
+  contra_advice_text?: string | null
+  storage_advice_text?: string | null
+  qr_code_url?: string | null
+  vat_percent?: number | null
+  acc_regist?: string | null
+  use_paidst?: string | null
+  thai_name?: string | null
+  fwf_item_id?: number | null
+  drugitems_em1_id?: number | null
+  drugitems_em2_id?: number | null
+  drugitems_em3_id?: number | null
+  drugitems_em4_id?: number | null
+  tmt_tp_code?: string | null
+  tmt_gp_code?: string | null
+  limit_pttype?: string | null
+  noshow_narcotic?: string | null
+  medication_machine_flag?: string | null
+  sks_price?: number | null
+  print_sticker_by_frequency?: string | null
+  print_sticker_pq_ipd?: string | null
+  sub_income?: string | null
+  prefer_ipd_usage_code?: string | null
+  default_qty_ipd?: number | null
+  max_qty_ipd?: number | null
+  drugusage_ipd?: string | null
+  no_popup_ipd_reason?: string | null
+  specprep?: string | null
+  med_dose_calc_type_id?: number | null
+  send_line_notify?: string | null
+  show_qrcode_trade?: string | null
+  warn_g6pd?: string | null
+  ipd_rx_freq_day?: number | null
+  displaycolor_focus?: number | null
+  last_update?: Date | string | null
+  no_remed?: string | null
+  force_round_qty?: string | null
+  atc_code?: string | null
+  state_item_id?: number | null
+  multiply_charge_service?: string | null
+  csmbs_claim_cat?: string | null
+  simb_2005?: string | null
+  sks_rev_date?: Date | string | null
+  sct_unit_code?: string | null
+  print_label?: string | null
+  need_presc_duration?: string | null
+  ttmt_code?: string | null
+  lock_dispense_qty_opd?: string | null
+  drugitemcode?: Prisma.drugitemcodeUncheckedCreateNestedManyWithoutDrugitemInput
+}
+
+export type drugitemsCreateOrConnectWithoutTransactionDrugRollBackInput = {
+  where: Prisma.drugitemsWhereUniqueInput
+  create: Prisma.XOR<Prisma.drugitemsCreateWithoutTransactionDrugRollBackInput, Prisma.drugitemsUncheckedCreateWithoutTransactionDrugRollBackInput>
+}
+
+export type drugitemsUpsertWithoutTransactionDrugRollBackInput = {
+  update: Prisma.XOR<Prisma.drugitemsUpdateWithoutTransactionDrugRollBackInput, Prisma.drugitemsUncheckedUpdateWithoutTransactionDrugRollBackInput>
+  create: Prisma.XOR<Prisma.drugitemsCreateWithoutTransactionDrugRollBackInput, Prisma.drugitemsUncheckedCreateWithoutTransactionDrugRollBackInput>
+  where?: Prisma.drugitemsWhereInput
+}
+
+export type drugitemsUpdateToOneWithWhereWithoutTransactionDrugRollBackInput = {
+  where?: Prisma.drugitemsWhereInput
+  data: Prisma.XOR<Prisma.drugitemsUpdateWithoutTransactionDrugRollBackInput, Prisma.drugitemsUncheckedUpdateWithoutTransactionDrugRollBackInput>
+}
+
+export type drugitemsUpdateWithoutTransactionDrugRollBackInput = {
+  icode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  strength?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  units?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitprice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  dosageform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  criticalpriority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugaccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugnote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hintcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  istatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastupdatestdprice?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockprice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxlevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  minlevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxunitperdose?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packqty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reorderqty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  stdprice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stdtaken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  therapeutic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  therapeuticgroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  gpo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  use_right?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  i_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugusage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  high_cost?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  must_paid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alert_level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  access_level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sticker_short_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  antibiotic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displaycolor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  empty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  empty_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitcost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  gfmiscode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ipd_price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  oldcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  habit_forming?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  did?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stock_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  price3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  ipd_price2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  ipd_price3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  price_lock?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pregnancy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pharmacology_group1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pharmacology_group2?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pharmacology_group3?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  generic_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  show_pregnancy_alert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icode_guid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  na?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  check_user_group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  check_user_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  show_notify?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  show_notify_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  income?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print_sticker_pq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  charge_service_opd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  charge_service_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dose_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  habit_forming_type?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  no_discount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  therapeutic_eng?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hintcode_eng?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  limit_drugusage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print_sticker_header?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  calc_idr_qty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_in_hospital?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  no_substock?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volume_cc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  usage_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  frequency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  time_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dispense_dose?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  usage_unit_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dose_per_units?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  ipd_default_pay?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billnumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockprint_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pregnancy_notify_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  show_breast_feeding_alert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  breast_feeding_alert_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  show_child_notify?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  child_notify_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  child_notify_min_age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  child_notify_max_age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  continuous?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  substitute_icode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trade_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  use_right_allow?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medication_machine_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ipd_medication_machine_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  check_remed_qty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addict_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  medication_machine_opd_no?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  medication_machine_ipd_no?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fp_drug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  usage_code_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dispense_dose_ipd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  usage_unit_code_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  frequency_code_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  time_code_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print_ipd_injection_sticker?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provis_medication_unit_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hos_guid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_product_category_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sks_clain_control_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sks_drug_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_dfs_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_dfs_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_reimb_price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  hos_guid_ext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  check_druginteraction_history?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  check_druginteraction_history_day?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nhso_adp_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nhso_adp_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_claim_control_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  begin_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finish_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  name_pr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name_eng?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  capacity_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finish_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extra_unitcost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  drug_control_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  name_print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active_ingredient_mg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  no_order_g6pd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender_check?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  no_order_gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  max_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  prefer_opd_usage_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  capacity_qty?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  need_order_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugitems_due_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugeval_head_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  light_protect?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tpu_code_list?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inv_map_update?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  special_advice_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  precaution_advice_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contra_advice_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storage_advice_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qr_code_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vat_percent?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  acc_regist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  use_paidst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thai_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fwf_item_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugitems_em1_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugitems_em2_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugitems_em3_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugitems_em4_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tmt_tp_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmt_gp_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  limit_pttype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  noshow_narcotic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medication_machine_flag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  print_sticker_by_frequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print_sticker_pq_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_income?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prefer_ipd_usage_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_qty_ipd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  max_qty_ipd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugusage_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  no_popup_ipd_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specprep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  med_dose_calc_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  send_line_notify?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  show_qrcode_trade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warn_g6pd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ipd_rx_freq_day?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  displaycolor_focus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  last_update?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  no_remed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  force_round_qty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  atc_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state_item_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  multiply_charge_service?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  csmbs_claim_cat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  simb_2005?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_rev_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sct_unit_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print_label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  need_presc_duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ttmt_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lock_dispense_qty_opd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugitemcode?: Prisma.drugitemcodeUpdateManyWithoutDrugitemNestedInput
+}
+
+export type drugitemsUncheckedUpdateWithoutTransactionDrugRollBackInput = {
+  icode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  strength?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  units?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitprice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  dosageform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  criticalpriority?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugaccount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugcategory?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugnote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hintcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  istatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastupdatestdprice?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lockprice?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockprint?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxlevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  minlevel?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  maxunitperdose?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packqty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  reorderqty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  stdprice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  stdtaken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  therapeutic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  therapeuticgroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  gpo_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  use_right?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  i_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugusage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  high_cost?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  must_paid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  alert_level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  access_level?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sticker_short_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  antibiotic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  displaycolor?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  empty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  empty_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  unitcost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  gfmiscode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ipd_price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  oldcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  habit_forming?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  did?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stock_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  price2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  price3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  ipd_price2?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  ipd_price3?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  price_lock?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pregnancy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pharmacology_group1?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pharmacology_group2?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  pharmacology_group3?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  generic_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  show_pregnancy_alert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  icode_guid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  na?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  invcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  check_user_group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  check_user_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  show_notify?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  show_notify_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  income?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print_sticker_pq?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  charge_service_opd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  charge_service_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ename?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dose_type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  habit_forming_type?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  no_discount?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  therapeutic_eng?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hintcode_eng?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  limit_drugusage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print_sticker_header?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  calc_idr_qty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  item_in_hospital?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  no_substock?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  volume_cc?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  usage_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  frequency_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  time_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dispense_dose?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  usage_unit_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dose_per_units?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  ipd_default_pay?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  billcode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billnumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lockprint_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pregnancy_notify_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  show_breast_feeding_alert?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  breast_feeding_alert_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  show_child_notify?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  child_notify_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  child_notify_min_age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  child_notify_max_age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  continuous?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  substitute_icode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trade_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  use_right_allow?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medication_machine_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ipd_medication_machine_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  check_remed_qty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  addict_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  medication_machine_opd_no?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  medication_machine_ipd_no?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fp_drug?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  usage_code_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dispense_dose_ipd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  usage_unit_code_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  frequency_code_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  time_code_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print_ipd_injection_sticker?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provis_medication_unit_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hos_guid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_product_category_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sks_clain_control_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  sks_drug_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_dfs_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_dfs_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_reimb_price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  hos_guid_ext?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  check_druginteraction_history?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  check_druginteraction_history_day?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nhso_adp_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nhso_adp_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_claim_control_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  begin_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finish_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  name_pr?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  name_eng?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  capacity_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  finish_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  extra_unitcost?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  drug_control_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  name_print?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  active_ingredient_mg?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  no_order_g6pd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gender_check?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  no_order_gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  max_qty?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  prefer_opd_usage_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  capacity_qty?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  need_order_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugitems_due_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugeval_head_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  light_protect?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tpu_code_list?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  inv_map_update?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  special_advice_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  precaution_advice_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contra_advice_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storage_advice_text?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qr_code_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  vat_percent?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  acc_regist?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  use_paidst?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thai_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fwf_item_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugitems_em1_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugitems_em2_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugitems_em3_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugitems_em4_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  tmt_tp_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tmt_gp_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  limit_pttype?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  noshow_narcotic?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medication_machine_flag?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_price?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  print_sticker_by_frequency?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print_sticker_pq_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sub_income?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  prefer_ipd_usage_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  default_qty_ipd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  max_qty_ipd?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  drugusage_ipd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  no_popup_ipd_reason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  specprep?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  med_dose_calc_type_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  send_line_notify?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  show_qrcode_trade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  warn_g6pd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ipd_rx_freq_day?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  displaycolor_focus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  last_update?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  no_remed?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  force_round_qty?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  atc_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state_item_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  multiply_charge_service?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  csmbs_claim_cat?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  simb_2005?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sks_rev_date?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sct_unit_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  print_label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  need_presc_duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ttmt_code?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lock_dispense_qty_opd?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  drugitemcode?: Prisma.drugitemcodeUncheckedUpdateManyWithoutDrugitemNestedInput
 }
 
 
@@ -5894,10 +6758,12 @@ export type drugitemsUncheckedUpdateWithoutDrugitemcodeInput = {
  */
 
 export type DrugitemsCountOutputType = {
+  transactionDrugRollBack: number
   drugitemcode: number
 }
 
 export type DrugitemsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  transactionDrugRollBack?: boolean | DrugitemsCountOutputTypeCountTransactionDrugRollBackArgs
   drugitemcode?: boolean | DrugitemsCountOutputTypeCountDrugitemcodeArgs
 }
 
@@ -5909,6 +6775,13 @@ export type DrugitemsCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
    * Select specific fields to fetch from the DrugitemsCountOutputType
    */
   select?: Prisma.DrugitemsCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * DrugitemsCountOutputType without action
+ */
+export type DrugitemsCountOutputTypeCountTransactionDrugRollBackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TransactionDrugRollBackWhereInput
 }
 
 /**
@@ -6120,6 +6993,7 @@ export type drugitemsSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   need_presc_duration?: boolean
   ttmt_code?: boolean
   lock_dispense_qty_opd?: boolean
+  transactionDrugRollBack?: boolean | Prisma.drugitems$transactionDrugRollBackArgs<ExtArgs>
   drugitemcode?: boolean | Prisma.drugitems$drugitemcodeArgs<ExtArgs>
   _count?: boolean | Prisma.DrugitemsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["drugitems"]>
@@ -6331,6 +7205,7 @@ export type drugitemsSelectScalar = {
 
 export type drugitemsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"icode" | "name" | "strength" | "units" | "unitprice" | "dosageform" | "criticalpriority" | "drugaccount" | "drugcategory" | "drugnote" | "hintcode" | "istatus" | "lastupdatestdprice" | "lockprice" | "lockprint" | "maxlevel" | "minlevel" | "maxunitperdose" | "packqty" | "reorderqty" | "stdprice" | "stdtaken" | "therapeutic" | "therapeuticgroup" | "default_qty" | "gpo_code" | "use_right" | "i_type" | "drugusage" | "high_cost" | "must_paid" | "alert_level" | "access_level" | "sticker_short_name" | "paidst" | "antibiotic" | "displaycolor" | "empty" | "empty_text" | "unitcost" | "gfmiscode" | "ipd_price" | "oldcode" | "habit_forming" | "did" | "stock_type" | "price2" | "price3" | "ipd_price2" | "ipd_price3" | "price_lock" | "pregnancy" | "pharmacology_group1" | "pharmacology_group2" | "pharmacology_group3" | "generic_name" | "show_pregnancy_alert" | "icode_guid" | "na" | "invcode" | "check_user_group" | "check_user_name" | "show_notify" | "show_notify_text" | "income" | "print_sticker_pq" | "charge_service_opd" | "charge_service_ipd" | "ename" | "dose_type" | "habit_forming_type" | "no_discount" | "therapeutic_eng" | "hintcode_eng" | "limit_drugusage" | "print_sticker_header" | "calc_idr_qty" | "item_in_hospital" | "no_substock" | "volume_cc" | "usage_code" | "frequency_code" | "time_code" | "dispense_dose" | "usage_unit_code" | "dose_per_units" | "ipd_default_pay" | "billcode" | "billnumber" | "lockprint_ipd" | "pregnancy_notify_text" | "show_breast_feeding_alert" | "breast_feeding_alert_text" | "show_child_notify" | "child_notify_text" | "child_notify_min_age" | "child_notify_max_age" | "continuous" | "substitute_icode" | "trade_name" | "use_right_allow" | "medication_machine_id" | "ipd_medication_machine_id" | "check_remed_qty" | "addict" | "addict_type_id" | "medication_machine_opd_no" | "medication_machine_ipd_no" | "fp_drug" | "usage_code_ipd" | "dispense_dose_ipd" | "usage_unit_code_ipd" | "frequency_code_ipd" | "time_code_ipd" | "print_ipd_injection_sticker" | "provis_medication_unit_code" | "hos_guid" | "sks_product_category_id" | "sks_clain_control_type_id" | "sks_drug_code" | "sks_dfs_code" | "sks_dfs_text" | "sks_reimb_price" | "hos_guid_ext" | "check_druginteraction_history" | "check_druginteraction_history_day" | "nhso_adp_type_id" | "nhso_adp_code" | "sks_claim_control_type_id" | "begin_date" | "finish_date" | "name_pr" | "name_eng" | "capacity_name" | "finish_reason" | "extra_unitcost" | "drug_control_type_id" | "name_print" | "active_ingredient_mg" | "no_order_g6pd" | "gender_check" | "no_order_gender" | "max_qty" | "prefer_opd_usage_code" | "capacity_qty" | "need_order_reason" | "drugitems_due_type_id" | "drugeval_head_id" | "light_protect" | "tpu_code_list" | "inv_map_update" | "special_advice_text" | "precaution_advice_text" | "contra_advice_text" | "storage_advice_text" | "qr_code_url" | "vat_percent" | "acc_regist" | "use_paidst" | "thai_name" | "fwf_item_id" | "drugitems_em1_id" | "drugitems_em2_id" | "drugitems_em3_id" | "drugitems_em4_id" | "tmt_tp_code" | "tmt_gp_code" | "limit_pttype" | "noshow_narcotic" | "medication_machine_flag" | "sks_price" | "print_sticker_by_frequency" | "print_sticker_pq_ipd" | "sub_income" | "prefer_ipd_usage_code" | "default_qty_ipd" | "max_qty_ipd" | "drugusage_ipd" | "no_popup_ipd_reason" | "specprep" | "med_dose_calc_type_id" | "send_line_notify" | "show_qrcode_trade" | "warn_g6pd" | "ipd_rx_freq_day" | "displaycolor_focus" | "last_update" | "no_remed" | "force_round_qty" | "atc_code" | "state_item_id" | "multiply_charge_service" | "csmbs_claim_cat" | "simb_2005" | "sks_rev_date" | "sct_unit_code" | "print_label" | "need_presc_duration" | "ttmt_code" | "lock_dispense_qty_opd", ExtArgs["result"]["drugitems"]>
 export type drugitemsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  transactionDrugRollBack?: boolean | Prisma.drugitems$transactionDrugRollBackArgs<ExtArgs>
   drugitemcode?: boolean | Prisma.drugitems$drugitemcodeArgs<ExtArgs>
   _count?: boolean | Prisma.DrugitemsCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -6338,6 +7213,7 @@ export type drugitemsInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type $drugitemsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "drugitems"
   objects: {
+    transactionDrugRollBack: Prisma.$TransactionDrugRollBackPayload<ExtArgs>[]
     drugitemcode: Prisma.$drugitemcodePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -6881,6 +7757,7 @@ readonly fields: drugitemsFieldRefs;
  */
 export interface Prisma__drugitemsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  transactionDrugRollBack<T extends Prisma.drugitems$transactionDrugRollBackArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.drugitems$transactionDrugRollBackArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionDrugRollBackPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   drugitemcode<T extends Prisma.drugitems$drugitemcodeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.drugitems$drugitemcodeArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$drugitemcodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -7456,6 +8333,30 @@ export type drugitemsDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many drugitems to delete.
    */
   limit?: number
+}
+
+/**
+ * drugitems.transactionDrugRollBack
+ */
+export type drugitems$transactionDrugRollBackArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TransactionDrugRollBack
+   */
+  select?: Prisma.TransactionDrugRollBackSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TransactionDrugRollBack
+   */
+  omit?: Prisma.TransactionDrugRollBackOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TransactionDrugRollBackInclude<ExtArgs> | null
+  where?: Prisma.TransactionDrugRollBackWhereInput
+  orderBy?: Prisma.TransactionDrugRollBackOrderByWithRelationInput | Prisma.TransactionDrugRollBackOrderByWithRelationInput[]
+  cursor?: Prisma.TransactionDrugRollBackWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TransactionDrugRollBackScalarFieldEnum | Prisma.TransactionDrugRollBackScalarFieldEnum[]
 }
 
 /**

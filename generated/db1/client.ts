@@ -55,27 +55,27 @@ export type drugitems = Prisma.drugitemsModel
  */
 export type opitemrece = Prisma.opitemreceModel
 /**
- * Model drugitemcode
+ * Model drugItemCodes
  * 
  */
-export type drugitemcode = Prisma.drugitemcodeModel
+export type drugItemCodes = Prisma.drugItemCodesModel
 /**
- * Model carrydrugitem
+ * Model totalDrugItemHOSs
  * 
  */
-export type carrydrugitem = Prisma.carrydrugitemModel
+export type totalDrugItemHOSs = Prisma.totalDrugItemHOSsModel
 /**
- * Model importdrugitem
+ * Model totalDrugHosRollbacks
  * 
  */
-export type importdrugitem = Prisma.importdrugitemModel
+export type totalDrugHosRollbacks = Prisma.totalDrugHosRollbacksModel
 /**
- * Model exportdrugitem
+ * Model drugItemStocks
  * 
  */
-export type exportdrugitem = Prisma.exportdrugitemModel
+export type drugItemStocks = Prisma.drugItemStocksModel
 /**
- * Model balance
+ * Model transactionDrugRollbacks
  * 
  */
-export type balance = Prisma.balanceModel
+export type transactionDrugRollbacks = Prisma.transactionDrugRollbacksModel

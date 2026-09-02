@@ -215,7 +215,7 @@ model drugitems {
   ttmt_code                         String?   @db.VarChar(10)
   lock_dispense_qty_opd             String?   @db.Char(1)
 
-
+ transactionDrugRollBack TransactionDrugRollBack[]  // ★ ต้องเพิ่ม back-relation
   drugitemcode                   drugitemcode[]
    @@unique([icode, invcode])
 
@@ -284,7 +284,7 @@ model opitemrece {
   stock_department_id           Int?
   command_doctor                String?   @db.VarChar(10)
   opi_doctor_finance_type_id     Int?
-
+ transactionDrugRollBack TransactionDrugRollBack[]  // ★ ต้องเพิ่ม back-relation
   @@index([an], map: "ix_an")
   @@index([an, order_no], map: "ix_an_order_no")
   @@index([order_no, an], map: "ix_an_order_no_index")
@@ -315,3 +315,23 @@ model drugitemcode{
   drugitem  drugitems  @relation(fields: [icode,invcode], references: [icode,invcode])
   @@index([icode, invcode], name: "icode_invcode")
 }
+
+model TransactionDrugRollBack {
+  id           Int        @id @default(autoincrement())
+  hos_guid     String     @unique @db.VarChar(38)   // ★ เอา @id ออก ใช้ @unique แทน (relation ต้องอิงคีย์ที่ unique)
+  opitemrece   opitemrece @relation(fields: [hos_guid], references: [hos_guid])
+  vn           String?    @db.VarChar(13)
+  hn           String?    @db.VarChar(9)
+  an           String?    @db.VarChar(9)
+  icode        String?    @db.VarChar(7)
+  invcode      String?    @db.VarChar(10)
+  drugitem     drugitems? @relation(fields: [icode, invcode], references: [icode, invcode])
+  unit         String?
+  stockIn      Int
+  stockOut     Int
+  totalStockIn Int
+  vstdate      DateTime?  @db.Date
+
+  @@index([icode, invcode], map: "icode_invcode")   // ★ name -> map
+}
+

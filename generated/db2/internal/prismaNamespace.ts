@@ -399,7 +399,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   drugitems: 'drugitems',
   opitemrece: 'opitemrece',
-  drugitemcode: 'drugitemcode'
+  drugitemcode: 'drugitemcode',
+  TransactionDrugRollBack: 'TransactionDrugRollBack'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -415,7 +416,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "drugitems" | "opitemrece" | "drugitemcode"
+    modelProps: "drugitems" | "opitemrece" | "drugitemcode" | "transactionDrugRollBack"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -614,6 +615,72 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.drugitemcodeCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.DrugitemcodeCountAggregateOutputType> | number
+        }
+      }
+    }
+    TransactionDrugRollBack: {
+      payload: Prisma.$TransactionDrugRollBackPayload<ExtArgs>
+      fields: Prisma.TransactionDrugRollBackFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TransactionDrugRollBackFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionDrugRollBackPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TransactionDrugRollBackFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionDrugRollBackPayload>
+        }
+        findFirst: {
+          args: Prisma.TransactionDrugRollBackFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionDrugRollBackPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TransactionDrugRollBackFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionDrugRollBackPayload>
+        }
+        findMany: {
+          args: Prisma.TransactionDrugRollBackFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionDrugRollBackPayload>[]
+        }
+        create: {
+          args: Prisma.TransactionDrugRollBackCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionDrugRollBackPayload>
+        }
+        createMany: {
+          args: Prisma.TransactionDrugRollBackCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.TransactionDrugRollBackDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionDrugRollBackPayload>
+        }
+        update: {
+          args: Prisma.TransactionDrugRollBackUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionDrugRollBackPayload>
+        }
+        deleteMany: {
+          args: Prisma.TransactionDrugRollBackDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TransactionDrugRollBackUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.TransactionDrugRollBackUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TransactionDrugRollBackPayload>
+        }
+        aggregate: {
+          args: Prisma.TransactionDrugRollBackAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTransactionDrugRollBack>
+        }
+        groupBy: {
+          args: Prisma.TransactionDrugRollBackGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransactionDrugRollBackGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TransactionDrugRollBackCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransactionDrugRollBackCountAggregateOutputType> | number
         }
       }
     }
@@ -920,6 +987,24 @@ export const DrugitemcodeScalarFieldEnum = {
 export type DrugitemcodeScalarFieldEnum = (typeof DrugitemcodeScalarFieldEnum)[keyof typeof DrugitemcodeScalarFieldEnum]
 
 
+export const TransactionDrugRollBackScalarFieldEnum = {
+  id: 'id',
+  hos_guid: 'hos_guid',
+  vn: 'vn',
+  hn: 'hn',
+  an: 'an',
+  icode: 'icode',
+  invcode: 'invcode',
+  unit: 'unit',
+  stockIn: 'stockIn',
+  stockOut: 'stockOut',
+  totalStockIn: 'totalStockIn',
+  vstdate: 'vstdate'
+} as const
+
+export type TransactionDrugRollBackScalarFieldEnum = (typeof TransactionDrugRollBackScalarFieldEnum)[keyof typeof TransactionDrugRollBackScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1116,6 +1201,19 @@ export const drugitemcodeOrderByRelevanceFieldEnum = {
 export type drugitemcodeOrderByRelevanceFieldEnum = (typeof drugitemcodeOrderByRelevanceFieldEnum)[keyof typeof drugitemcodeOrderByRelevanceFieldEnum]
 
 
+export const TransactionDrugRollBackOrderByRelevanceFieldEnum = {
+  hos_guid: 'hos_guid',
+  vn: 'vn',
+  hn: 'hn',
+  an: 'an',
+  icode: 'icode',
+  invcode: 'invcode',
+  unit: 'unit'
+} as const
+
+export type TransactionDrugRollBackOrderByRelevanceFieldEnum = (typeof TransactionDrugRollBackOrderByRelevanceFieldEnum)[keyof typeof TransactionDrugRollBackOrderByRelevanceFieldEnum]
+
+
 
 /**
  * Field references
@@ -1303,6 +1401,7 @@ export type GlobalOmitConfig = {
   drugitems?: Prisma.drugitemsOmit
   opitemrece?: Prisma.opitemreceOmit
   drugitemcode?: Prisma.drugitemcodeOmit
+  transactionDrugRollBack?: Prisma.TransactionDrugRollBackOmit
 }
 
 /* Types for Logging */

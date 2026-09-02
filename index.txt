@@ -1,0 +1,54 @@
+model drugitemcode{
+  id            Int         @id @default(autoincrement())
+  icode         String     @db.VarChar(7)
+  invcode       String     @db.VarChar(10)
+  mpack         Int
+  unit          String?
+  drugitem  drugitems  @relation(fields: [icode,invcode], references: [icode,invcode])
+  @@index([icode, invcode], name: "icode_invcode")
+}
+
+model totaldrugItemHos{
+  id            Int         @id @default(autoincrement())
+  icode         String     @unique @db.VarChar(7)
+  invcode       String     @db.VarChar(10)
+  mpack         Int
+  unit          String?
+  qty           Int
+  opitemrece opitemrece[]   // ★ ตรงนี้แหละคือ "totaldrugItemHos ของ opitemrece เป็น list" — list ที่ต้องการ
+  drugitem  drugitems  @relation(fields: [icode,invcode], references: [icode,invcode])
+  @@index([icode, invcode], name: "icode_invcode")
+}
+
+model totaldrugHOSRollback{
+  id            Int         @id @default(autoincrement())
+  icode         String     @db.VarChar(7)
+  invcode       String     @db.VarChar(10)
+  beforestock   Int
+  importStock   Int
+  totalStockIn  Int
+  drugitem  drugitems  @relation(fields: [icode,invcode], references: [icode,invcode])
+  @@index([icode, invcode], name: "icode_invcode")
+   yearmonth     String?     @db.VarChar(7)
+  createdAt     DateTime  @default(now())
+}
+
+
+model drugItemStock{
+  id            Int         @id @default(autoincrement())
+  icode         String?     @db.VarChar(7)
+  invcode       String?     @db.VarChar(10)
+  mpack         Int
+  unit          String?
+  tremain            Int
+  remainvalue        Float?      @db.Double
+  tr            Int
+  rvalue        Float?      @db.Double
+  td            Int
+  dvalue        Float?      @db.Double
+  ttr           Int
+  bal_value     Float
+  yearmonth     String?     @db.VarChar(7)
+  drugitem  drugitems?  @relation(fields: [icode,invcode], references: [icode,invcode])
+  @@index([icode, invcode], name: "icode_invcode")
+}

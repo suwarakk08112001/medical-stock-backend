@@ -400,11 +400,11 @@ export const ModelName = {
   Opduser: 'Opduser',
   drugitems: 'drugitems',
   opitemrece: 'opitemrece',
-  drugitemcode: 'drugitemcode',
-  carrydrugitem: 'carrydrugitem',
-  importdrugitem: 'importdrugitem',
-  exportdrugitem: 'exportdrugitem',
-  balance: 'balance'
+  drugItemCodes: 'drugItemCodes',
+  totalDrugItemHOSs: 'totalDrugItemHOSs',
+  totalDrugHosRollbacks: 'totalDrugHosRollbacks',
+  drugItemStocks: 'drugItemStocks',
+  transactionDrugRollbacks: 'transactionDrugRollbacks'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -420,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "opduser" | "drugitems" | "opitemrece" | "drugitemcode" | "carrydrugitem" | "importdrugitem" | "exportdrugitem" | "balance"
+    modelProps: "opduser" | "drugitems" | "opitemrece" | "drugItemCodes" | "totalDrugItemHOSs" | "totalDrugHosRollbacks" | "drugItemStocks" | "transactionDrugRollbacks"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -622,333 +622,333 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    drugitemcode: {
-      payload: Prisma.$drugitemcodePayload<ExtArgs>
-      fields: Prisma.drugitemcodeFieldRefs
+    drugItemCodes: {
+      payload: Prisma.$drugItemCodesPayload<ExtArgs>
+      fields: Prisma.drugItemCodesFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.drugitemcodeFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugitemcodePayload> | null
+          args: Prisma.drugItemCodesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemCodesPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.drugitemcodeFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugitemcodePayload>
+          args: Prisma.drugItemCodesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemCodesPayload>
         }
         findFirst: {
-          args: Prisma.drugitemcodeFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugitemcodePayload> | null
+          args: Prisma.drugItemCodesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemCodesPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.drugitemcodeFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugitemcodePayload>
+          args: Prisma.drugItemCodesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemCodesPayload>
         }
         findMany: {
-          args: Prisma.drugitemcodeFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugitemcodePayload>[]
+          args: Prisma.drugItemCodesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemCodesPayload>[]
         }
         create: {
-          args: Prisma.drugitemcodeCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugitemcodePayload>
+          args: Prisma.drugItemCodesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemCodesPayload>
         }
         createMany: {
-          args: Prisma.drugitemcodeCreateManyArgs<ExtArgs>
+          args: Prisma.drugItemCodesCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         delete: {
-          args: Prisma.drugitemcodeDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugitemcodePayload>
+          args: Prisma.drugItemCodesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemCodesPayload>
         }
         update: {
-          args: Prisma.drugitemcodeUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugitemcodePayload>
+          args: Prisma.drugItemCodesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemCodesPayload>
         }
         deleteMany: {
-          args: Prisma.drugitemcodeDeleteManyArgs<ExtArgs>
+          args: Prisma.drugItemCodesDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.drugitemcodeUpdateManyArgs<ExtArgs>
+          args: Prisma.drugItemCodesUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         upsert: {
-          args: Prisma.drugitemcodeUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugitemcodePayload>
+          args: Prisma.drugItemCodesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemCodesPayload>
         }
         aggregate: {
-          args: Prisma.DrugitemcodeAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateDrugitemcode>
+          args: Prisma.DrugItemCodesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDrugItemCodes>
         }
         groupBy: {
-          args: Prisma.drugitemcodeGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.DrugitemcodeGroupByOutputType>[]
+          args: Prisma.drugItemCodesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DrugItemCodesGroupByOutputType>[]
         }
         count: {
-          args: Prisma.drugitemcodeCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.DrugitemcodeCountAggregateOutputType> | number
+          args: Prisma.drugItemCodesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DrugItemCodesCountAggregateOutputType> | number
         }
       }
     }
-    carrydrugitem: {
-      payload: Prisma.$carrydrugitemPayload<ExtArgs>
-      fields: Prisma.carrydrugitemFieldRefs
+    totalDrugItemHOSs: {
+      payload: Prisma.$totalDrugItemHOSsPayload<ExtArgs>
+      fields: Prisma.totalDrugItemHOSsFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.carrydrugitemFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$carrydrugitemPayload> | null
+          args: Prisma.totalDrugItemHOSsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugItemHOSsPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.carrydrugitemFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$carrydrugitemPayload>
+          args: Prisma.totalDrugItemHOSsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugItemHOSsPayload>
         }
         findFirst: {
-          args: Prisma.carrydrugitemFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$carrydrugitemPayload> | null
+          args: Prisma.totalDrugItemHOSsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugItemHOSsPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.carrydrugitemFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$carrydrugitemPayload>
+          args: Prisma.totalDrugItemHOSsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugItemHOSsPayload>
         }
         findMany: {
-          args: Prisma.carrydrugitemFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$carrydrugitemPayload>[]
+          args: Prisma.totalDrugItemHOSsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugItemHOSsPayload>[]
         }
         create: {
-          args: Prisma.carrydrugitemCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$carrydrugitemPayload>
+          args: Prisma.totalDrugItemHOSsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugItemHOSsPayload>
         }
         createMany: {
-          args: Prisma.carrydrugitemCreateManyArgs<ExtArgs>
+          args: Prisma.totalDrugItemHOSsCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         delete: {
-          args: Prisma.carrydrugitemDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$carrydrugitemPayload>
+          args: Prisma.totalDrugItemHOSsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugItemHOSsPayload>
         }
         update: {
-          args: Prisma.carrydrugitemUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$carrydrugitemPayload>
+          args: Prisma.totalDrugItemHOSsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugItemHOSsPayload>
         }
         deleteMany: {
-          args: Prisma.carrydrugitemDeleteManyArgs<ExtArgs>
+          args: Prisma.totalDrugItemHOSsDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.carrydrugitemUpdateManyArgs<ExtArgs>
+          args: Prisma.totalDrugItemHOSsUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         upsert: {
-          args: Prisma.carrydrugitemUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$carrydrugitemPayload>
+          args: Prisma.totalDrugItemHOSsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugItemHOSsPayload>
         }
         aggregate: {
-          args: Prisma.CarrydrugitemAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateCarrydrugitem>
+          args: Prisma.TotalDrugItemHOSsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTotalDrugItemHOSs>
         }
         groupBy: {
-          args: Prisma.carrydrugitemGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CarrydrugitemGroupByOutputType>[]
+          args: Prisma.totalDrugItemHOSsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TotalDrugItemHOSsGroupByOutputType>[]
         }
         count: {
-          args: Prisma.carrydrugitemCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CarrydrugitemCountAggregateOutputType> | number
+          args: Prisma.totalDrugItemHOSsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TotalDrugItemHOSsCountAggregateOutputType> | number
         }
       }
     }
-    importdrugitem: {
-      payload: Prisma.$importdrugitemPayload<ExtArgs>
-      fields: Prisma.importdrugitemFieldRefs
+    totalDrugHosRollbacks: {
+      payload: Prisma.$totalDrugHosRollbacksPayload<ExtArgs>
+      fields: Prisma.totalDrugHosRollbacksFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.importdrugitemFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$importdrugitemPayload> | null
+          args: Prisma.totalDrugHosRollbacksFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugHosRollbacksPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.importdrugitemFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$importdrugitemPayload>
+          args: Prisma.totalDrugHosRollbacksFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugHosRollbacksPayload>
         }
         findFirst: {
-          args: Prisma.importdrugitemFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$importdrugitemPayload> | null
+          args: Prisma.totalDrugHosRollbacksFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugHosRollbacksPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.importdrugitemFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$importdrugitemPayload>
+          args: Prisma.totalDrugHosRollbacksFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugHosRollbacksPayload>
         }
         findMany: {
-          args: Prisma.importdrugitemFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$importdrugitemPayload>[]
+          args: Prisma.totalDrugHosRollbacksFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugHosRollbacksPayload>[]
         }
         create: {
-          args: Prisma.importdrugitemCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$importdrugitemPayload>
+          args: Prisma.totalDrugHosRollbacksCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugHosRollbacksPayload>
         }
         createMany: {
-          args: Prisma.importdrugitemCreateManyArgs<ExtArgs>
+          args: Prisma.totalDrugHosRollbacksCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         delete: {
-          args: Prisma.importdrugitemDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$importdrugitemPayload>
+          args: Prisma.totalDrugHosRollbacksDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugHosRollbacksPayload>
         }
         update: {
-          args: Prisma.importdrugitemUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$importdrugitemPayload>
+          args: Prisma.totalDrugHosRollbacksUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugHosRollbacksPayload>
         }
         deleteMany: {
-          args: Prisma.importdrugitemDeleteManyArgs<ExtArgs>
+          args: Prisma.totalDrugHosRollbacksDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.importdrugitemUpdateManyArgs<ExtArgs>
+          args: Prisma.totalDrugHosRollbacksUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         upsert: {
-          args: Prisma.importdrugitemUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$importdrugitemPayload>
+          args: Prisma.totalDrugHosRollbacksUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$totalDrugHosRollbacksPayload>
         }
         aggregate: {
-          args: Prisma.ImportdrugitemAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateImportdrugitem>
+          args: Prisma.TotalDrugHosRollbacksAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTotalDrugHosRollbacks>
         }
         groupBy: {
-          args: Prisma.importdrugitemGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ImportdrugitemGroupByOutputType>[]
+          args: Prisma.totalDrugHosRollbacksGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TotalDrugHosRollbacksGroupByOutputType>[]
         }
         count: {
-          args: Prisma.importdrugitemCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ImportdrugitemCountAggregateOutputType> | number
+          args: Prisma.totalDrugHosRollbacksCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TotalDrugHosRollbacksCountAggregateOutputType> | number
         }
       }
     }
-    exportdrugitem: {
-      payload: Prisma.$exportdrugitemPayload<ExtArgs>
-      fields: Prisma.exportdrugitemFieldRefs
+    drugItemStocks: {
+      payload: Prisma.$drugItemStocksPayload<ExtArgs>
+      fields: Prisma.drugItemStocksFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.exportdrugitemFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$exportdrugitemPayload> | null
+          args: Prisma.drugItemStocksFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemStocksPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.exportdrugitemFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$exportdrugitemPayload>
+          args: Prisma.drugItemStocksFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemStocksPayload>
         }
         findFirst: {
-          args: Prisma.exportdrugitemFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$exportdrugitemPayload> | null
+          args: Prisma.drugItemStocksFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemStocksPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.exportdrugitemFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$exportdrugitemPayload>
+          args: Prisma.drugItemStocksFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemStocksPayload>
         }
         findMany: {
-          args: Prisma.exportdrugitemFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$exportdrugitemPayload>[]
+          args: Prisma.drugItemStocksFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemStocksPayload>[]
         }
         create: {
-          args: Prisma.exportdrugitemCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$exportdrugitemPayload>
+          args: Prisma.drugItemStocksCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemStocksPayload>
         }
         createMany: {
-          args: Prisma.exportdrugitemCreateManyArgs<ExtArgs>
+          args: Prisma.drugItemStocksCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         delete: {
-          args: Prisma.exportdrugitemDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$exportdrugitemPayload>
+          args: Prisma.drugItemStocksDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemStocksPayload>
         }
         update: {
-          args: Prisma.exportdrugitemUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$exportdrugitemPayload>
+          args: Prisma.drugItemStocksUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemStocksPayload>
         }
         deleteMany: {
-          args: Prisma.exportdrugitemDeleteManyArgs<ExtArgs>
+          args: Prisma.drugItemStocksDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.exportdrugitemUpdateManyArgs<ExtArgs>
+          args: Prisma.drugItemStocksUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         upsert: {
-          args: Prisma.exportdrugitemUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$exportdrugitemPayload>
+          args: Prisma.drugItemStocksUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$drugItemStocksPayload>
         }
         aggregate: {
-          args: Prisma.ExportdrugitemAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateExportdrugitem>
+          args: Prisma.DrugItemStocksAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDrugItemStocks>
         }
         groupBy: {
-          args: Prisma.exportdrugitemGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ExportdrugitemGroupByOutputType>[]
+          args: Prisma.drugItemStocksGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DrugItemStocksGroupByOutputType>[]
         }
         count: {
-          args: Prisma.exportdrugitemCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ExportdrugitemCountAggregateOutputType> | number
+          args: Prisma.drugItemStocksCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DrugItemStocksCountAggregateOutputType> | number
         }
       }
     }
-    balance: {
-      payload: Prisma.$balancePayload<ExtArgs>
-      fields: Prisma.balanceFieldRefs
+    transactionDrugRollbacks: {
+      payload: Prisma.$transactionDrugRollbacksPayload<ExtArgs>
+      fields: Prisma.transactionDrugRollbacksFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.balanceFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$balancePayload> | null
+          args: Prisma.transactionDrugRollbacksFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$transactionDrugRollbacksPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.balanceFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$balancePayload>
+          args: Prisma.transactionDrugRollbacksFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$transactionDrugRollbacksPayload>
         }
         findFirst: {
-          args: Prisma.balanceFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$balancePayload> | null
+          args: Prisma.transactionDrugRollbacksFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$transactionDrugRollbacksPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.balanceFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$balancePayload>
+          args: Prisma.transactionDrugRollbacksFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$transactionDrugRollbacksPayload>
         }
         findMany: {
-          args: Prisma.balanceFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$balancePayload>[]
+          args: Prisma.transactionDrugRollbacksFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$transactionDrugRollbacksPayload>[]
         }
         create: {
-          args: Prisma.balanceCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$balancePayload>
+          args: Prisma.transactionDrugRollbacksCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$transactionDrugRollbacksPayload>
         }
         createMany: {
-          args: Prisma.balanceCreateManyArgs<ExtArgs>
+          args: Prisma.transactionDrugRollbacksCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         delete: {
-          args: Prisma.balanceDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$balancePayload>
+          args: Prisma.transactionDrugRollbacksDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$transactionDrugRollbacksPayload>
         }
         update: {
-          args: Prisma.balanceUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$balancePayload>
+          args: Prisma.transactionDrugRollbacksUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$transactionDrugRollbacksPayload>
         }
         deleteMany: {
-          args: Prisma.balanceDeleteManyArgs<ExtArgs>
+          args: Prisma.transactionDrugRollbacksDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.balanceUpdateManyArgs<ExtArgs>
+          args: Prisma.transactionDrugRollbacksUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         upsert: {
-          args: Prisma.balanceUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$balancePayload>
+          args: Prisma.transactionDrugRollbacksUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$transactionDrugRollbacksPayload>
         }
         aggregate: {
-          args: Prisma.BalanceAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateBalance>
+          args: Prisma.TransactionDrugRollbacksAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTransactionDrugRollbacks>
         }
         groupBy: {
-          args: Prisma.balanceGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.BalanceGroupByOutputType>[]
+          args: Prisma.transactionDrugRollbacksGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransactionDrugRollbacksGroupByOutputType>[]
         }
         count: {
-          args: Prisma.balanceCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.BalanceCountAggregateOutputType> | number
+          args: Prisma.transactionDrugRollbacksCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TransactionDrugRollbacksCountAggregateOutputType> | number
         }
       }
     }
@@ -1295,71 +1295,75 @@ export const OpitemreceScalarFieldEnum = {
 export type OpitemreceScalarFieldEnum = (typeof OpitemreceScalarFieldEnum)[keyof typeof OpitemreceScalarFieldEnum]
 
 
-export const DrugitemcodeScalarFieldEnum = {
+export const DrugItemCodesScalarFieldEnum = {
   id: 'id',
   icode: 'icode',
   invcode: 'invcode',
+  type: 'type',
   mpack: 'mpack',
   unit: 'unit'
 } as const
 
-export type DrugitemcodeScalarFieldEnum = (typeof DrugitemcodeScalarFieldEnum)[keyof typeof DrugitemcodeScalarFieldEnum]
+export type DrugItemCodesScalarFieldEnum = (typeof DrugItemCodesScalarFieldEnum)[keyof typeof DrugItemCodesScalarFieldEnum]
 
 
-export const CarrydrugitemScalarFieldEnum = {
+export const TotalDrugItemHOSsScalarFieldEnum = {
   id: 'id',
-  icode: 'icode',
-  invcode: 'invcode',
-  mpack: 'mpack',
-  unit: 'unit',
+  drugItemCodeId: 'drugItemCodeId',
+  qty: 'qty'
+} as const
+
+export type TotalDrugItemHOSsScalarFieldEnum = (typeof TotalDrugItemHOSsScalarFieldEnum)[keyof typeof TotalDrugItemHOSsScalarFieldEnum]
+
+
+export const TotalDrugHosRollbacksScalarFieldEnum = {
+  id: 'id',
+  drugItemCodeId: 'drugItemCodeId',
+  beforestock: 'beforestock',
+  importStock: 'importStock',
+  totalStockIn: 'totalStockIn',
+  closingdate: 'closingdate',
+  createdAt: 'createdAt'
+} as const
+
+export type TotalDrugHosRollbacksScalarFieldEnum = (typeof TotalDrugHosRollbacksScalarFieldEnum)[keyof typeof TotalDrugHosRollbacksScalarFieldEnum]
+
+
+export const DrugItemStocksScalarFieldEnum = {
+  id: 'id',
+  drugItemCodeId: 'drugItemCodeId',
   tremain: 'tremain',
   remainvalue: 'remainvalue',
-  yearmonth: 'yearmonth'
-} as const
-
-export type CarrydrugitemScalarFieldEnum = (typeof CarrydrugitemScalarFieldEnum)[keyof typeof CarrydrugitemScalarFieldEnum]
-
-
-export const ImportdrugitemScalarFieldEnum = {
-  id: 'id',
-  icode: 'icode',
-  invcode: 'invcode',
-  mpack: 'mpack',
-  unit: 'unit',
   tr: 'tr',
   rvalue: 'rvalue',
-  yearmonth: 'yearmonth'
-} as const
-
-export type ImportdrugitemScalarFieldEnum = (typeof ImportdrugitemScalarFieldEnum)[keyof typeof ImportdrugitemScalarFieldEnum]
-
-
-export const ExportdrugitemScalarFieldEnum = {
-  id: 'id',
-  icode: 'icode',
-  invcode: 'invcode',
-  mpack: 'mpack',
-  unit: 'unit',
   td: 'td',
   dvalue: 'dvalue',
-  yearmonth: 'yearmonth'
-} as const
-
-export type ExportdrugitemScalarFieldEnum = (typeof ExportdrugitemScalarFieldEnum)[keyof typeof ExportdrugitemScalarFieldEnum]
-
-
-export const BalanceScalarFieldEnum = {
-  id: 'id',
-  icode: 'icode',
-  invcode: 'invcode',
-  mpack: 'mpack',
-  unit: 'unit',
   ttr: 'ttr',
   bal_value: 'bal_value',
-  yearmonth: 'yearmonth'
+  yearmonth: 'yearmonth',
+  closingdate: 'closingdate'
 } as const
 
-export type BalanceScalarFieldEnum = (typeof BalanceScalarFieldEnum)[keyof typeof BalanceScalarFieldEnum]
+export type DrugItemStocksScalarFieldEnum = (typeof DrugItemStocksScalarFieldEnum)[keyof typeof DrugItemStocksScalarFieldEnum]
+
+
+export const TransactionDrugRollbacksScalarFieldEnum = {
+  id: 'id',
+  hos_guid: 'hos_guid',
+  drugItemCodeId: 'drugItemCodeId',
+  vn: 'vn',
+  hn: 'hn',
+  an: 'an',
+  icode: 'icode',
+  invcode: 'invcode',
+  unit: 'unit',
+  stockIn: 'stockIn',
+  stockOut: 'stockOut',
+  totalStockIn: 'totalStockIn',
+  vstdate: 'vstdate'
+} as const
+
+export type TransactionDrugRollbacksScalarFieldEnum = (typeof TransactionDrugRollbacksScalarFieldEnum)[keyof typeof TransactionDrugRollbacksScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1591,53 +1595,34 @@ export const opitemreceOrderByRelevanceFieldEnum = {
 export type opitemreceOrderByRelevanceFieldEnum = (typeof opitemreceOrderByRelevanceFieldEnum)[keyof typeof opitemreceOrderByRelevanceFieldEnum]
 
 
-export const drugitemcodeOrderByRelevanceFieldEnum = {
+export const drugItemCodesOrderByRelevanceFieldEnum = {
+  icode: 'icode',
+  invcode: 'invcode',
+  type: 'type',
+  unit: 'unit'
+} as const
+
+export type drugItemCodesOrderByRelevanceFieldEnum = (typeof drugItemCodesOrderByRelevanceFieldEnum)[keyof typeof drugItemCodesOrderByRelevanceFieldEnum]
+
+
+export const drugItemStocksOrderByRelevanceFieldEnum = {
+  yearmonth: 'yearmonth'
+} as const
+
+export type drugItemStocksOrderByRelevanceFieldEnum = (typeof drugItemStocksOrderByRelevanceFieldEnum)[keyof typeof drugItemStocksOrderByRelevanceFieldEnum]
+
+
+export const transactionDrugRollbacksOrderByRelevanceFieldEnum = {
+  hos_guid: 'hos_guid',
+  vn: 'vn',
+  hn: 'hn',
+  an: 'an',
   icode: 'icode',
   invcode: 'invcode',
   unit: 'unit'
 } as const
 
-export type drugitemcodeOrderByRelevanceFieldEnum = (typeof drugitemcodeOrderByRelevanceFieldEnum)[keyof typeof drugitemcodeOrderByRelevanceFieldEnum]
-
-
-export const carrydrugitemOrderByRelevanceFieldEnum = {
-  icode: 'icode',
-  invcode: 'invcode',
-  unit: 'unit',
-  yearmonth: 'yearmonth'
-} as const
-
-export type carrydrugitemOrderByRelevanceFieldEnum = (typeof carrydrugitemOrderByRelevanceFieldEnum)[keyof typeof carrydrugitemOrderByRelevanceFieldEnum]
-
-
-export const importdrugitemOrderByRelevanceFieldEnum = {
-  icode: 'icode',
-  invcode: 'invcode',
-  unit: 'unit',
-  yearmonth: 'yearmonth'
-} as const
-
-export type importdrugitemOrderByRelevanceFieldEnum = (typeof importdrugitemOrderByRelevanceFieldEnum)[keyof typeof importdrugitemOrderByRelevanceFieldEnum]
-
-
-export const exportdrugitemOrderByRelevanceFieldEnum = {
-  icode: 'icode',
-  invcode: 'invcode',
-  unit: 'unit',
-  yearmonth: 'yearmonth'
-} as const
-
-export type exportdrugitemOrderByRelevanceFieldEnum = (typeof exportdrugitemOrderByRelevanceFieldEnum)[keyof typeof exportdrugitemOrderByRelevanceFieldEnum]
-
-
-export const balanceOrderByRelevanceFieldEnum = {
-  icode: 'icode',
-  invcode: 'invcode',
-  unit: 'unit',
-  yearmonth: 'yearmonth'
-} as const
-
-export type balanceOrderByRelevanceFieldEnum = (typeof balanceOrderByRelevanceFieldEnum)[keyof typeof balanceOrderByRelevanceFieldEnum]
+export type transactionDrugRollbacksOrderByRelevanceFieldEnum = (typeof transactionDrugRollbacksOrderByRelevanceFieldEnum)[keyof typeof transactionDrugRollbacksOrderByRelevanceFieldEnum]
 
 
 
@@ -1834,11 +1819,11 @@ export type GlobalOmitConfig = {
   opduser?: Prisma.OpduserOmit
   drugitems?: Prisma.drugitemsOmit
   opitemrece?: Prisma.opitemreceOmit
-  drugitemcode?: Prisma.drugitemcodeOmit
-  carrydrugitem?: Prisma.carrydrugitemOmit
-  importdrugitem?: Prisma.importdrugitemOmit
-  exportdrugitem?: Prisma.exportdrugitemOmit
-  balance?: Prisma.balanceOmit
+  drugItemCodes?: Prisma.drugItemCodesOmit
+  totalDrugItemHOSs?: Prisma.totalDrugItemHOSsOmit
+  totalDrugHosRollbacks?: Prisma.totalDrugHosRollbacksOmit
+  drugItemStocks?: Prisma.drugItemStocksOmit
+  transactionDrugRollbacks?: Prisma.transactionDrugRollbacksOmit
 }
 
 /* Types for Logging */

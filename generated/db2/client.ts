@@ -54,3 +54,8 @@ export type opitemrece = Prisma.opitemreceModel
  * 
  */
 export type drugitemcode = Prisma.drugitemcodeModel
+/**
+ * Model TransactionDrugRollBack
+ * 
+ */
+export type TransactionDrugRollBack = Prisma.TransactionDrugRollBackModel

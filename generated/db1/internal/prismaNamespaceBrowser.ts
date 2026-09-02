@@ -54,11 +54,11 @@ export const ModelName = {
   Opduser: 'Opduser',
   drugitems: 'drugitems',
   opitemrece: 'opitemrece',
-  drugitemcode: 'drugitemcode',
-  carrydrugitem: 'carrydrugitem',
-  importdrugitem: 'importdrugitem',
-  exportdrugitem: 'exportdrugitem',
-  balance: 'balance'
+  drugItemCodes: 'drugItemCodes',
+  totalDrugItemHOSs: 'totalDrugItemHOSs',
+  totalDrugHosRollbacks: 'totalDrugHosRollbacks',
+  drugItemStocks: 'drugItemStocks',
+  transactionDrugRollbacks: 'transactionDrugRollbacks'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -381,71 +381,75 @@ export const OpitemreceScalarFieldEnum = {
 export type OpitemreceScalarFieldEnum = (typeof OpitemreceScalarFieldEnum)[keyof typeof OpitemreceScalarFieldEnum]
 
 
-export const DrugitemcodeScalarFieldEnum = {
+export const DrugItemCodesScalarFieldEnum = {
   id: 'id',
   icode: 'icode',
   invcode: 'invcode',
+  type: 'type',
   mpack: 'mpack',
   unit: 'unit'
 } as const
 
-export type DrugitemcodeScalarFieldEnum = (typeof DrugitemcodeScalarFieldEnum)[keyof typeof DrugitemcodeScalarFieldEnum]
+export type DrugItemCodesScalarFieldEnum = (typeof DrugItemCodesScalarFieldEnum)[keyof typeof DrugItemCodesScalarFieldEnum]
 
 
-export const CarrydrugitemScalarFieldEnum = {
+export const TotalDrugItemHOSsScalarFieldEnum = {
   id: 'id',
-  icode: 'icode',
-  invcode: 'invcode',
-  mpack: 'mpack',
-  unit: 'unit',
+  drugItemCodeId: 'drugItemCodeId',
+  qty: 'qty'
+} as const
+
+export type TotalDrugItemHOSsScalarFieldEnum = (typeof TotalDrugItemHOSsScalarFieldEnum)[keyof typeof TotalDrugItemHOSsScalarFieldEnum]
+
+
+export const TotalDrugHosRollbacksScalarFieldEnum = {
+  id: 'id',
+  drugItemCodeId: 'drugItemCodeId',
+  beforestock: 'beforestock',
+  importStock: 'importStock',
+  totalStockIn: 'totalStockIn',
+  closingdate: 'closingdate',
+  createdAt: 'createdAt'
+} as const
+
+export type TotalDrugHosRollbacksScalarFieldEnum = (typeof TotalDrugHosRollbacksScalarFieldEnum)[keyof typeof TotalDrugHosRollbacksScalarFieldEnum]
+
+
+export const DrugItemStocksScalarFieldEnum = {
+  id: 'id',
+  drugItemCodeId: 'drugItemCodeId',
   tremain: 'tremain',
   remainvalue: 'remainvalue',
-  yearmonth: 'yearmonth'
-} as const
-
-export type CarrydrugitemScalarFieldEnum = (typeof CarrydrugitemScalarFieldEnum)[keyof typeof CarrydrugitemScalarFieldEnum]
-
-
-export const ImportdrugitemScalarFieldEnum = {
-  id: 'id',
-  icode: 'icode',
-  invcode: 'invcode',
-  mpack: 'mpack',
-  unit: 'unit',
   tr: 'tr',
   rvalue: 'rvalue',
-  yearmonth: 'yearmonth'
-} as const
-
-export type ImportdrugitemScalarFieldEnum = (typeof ImportdrugitemScalarFieldEnum)[keyof typeof ImportdrugitemScalarFieldEnum]
-
-
-export const ExportdrugitemScalarFieldEnum = {
-  id: 'id',
-  icode: 'icode',
-  invcode: 'invcode',
-  mpack: 'mpack',
-  unit: 'unit',
   td: 'td',
   dvalue: 'dvalue',
-  yearmonth: 'yearmonth'
-} as const
-
-export type ExportdrugitemScalarFieldEnum = (typeof ExportdrugitemScalarFieldEnum)[keyof typeof ExportdrugitemScalarFieldEnum]
-
-
-export const BalanceScalarFieldEnum = {
-  id: 'id',
-  icode: 'icode',
-  invcode: 'invcode',
-  mpack: 'mpack',
-  unit: 'unit',
   ttr: 'ttr',
   bal_value: 'bal_value',
-  yearmonth: 'yearmonth'
+  yearmonth: 'yearmonth',
+  closingdate: 'closingdate'
 } as const
 
-export type BalanceScalarFieldEnum = (typeof BalanceScalarFieldEnum)[keyof typeof BalanceScalarFieldEnum]
+export type DrugItemStocksScalarFieldEnum = (typeof DrugItemStocksScalarFieldEnum)[keyof typeof DrugItemStocksScalarFieldEnum]
+
+
+export const TransactionDrugRollbacksScalarFieldEnum = {
+  id: 'id',
+  hos_guid: 'hos_guid',
+  drugItemCodeId: 'drugItemCodeId',
+  vn: 'vn',
+  hn: 'hn',
+  an: 'an',
+  icode: 'icode',
+  invcode: 'invcode',
+  unit: 'unit',
+  stockIn: 'stockIn',
+  stockOut: 'stockOut',
+  totalStockIn: 'totalStockIn',
+  vstdate: 'vstdate'
+} as const
+
+export type TransactionDrugRollbacksScalarFieldEnum = (typeof TransactionDrugRollbacksScalarFieldEnum)[keyof typeof TransactionDrugRollbacksScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -677,51 +681,32 @@ export const opitemreceOrderByRelevanceFieldEnum = {
 export type opitemreceOrderByRelevanceFieldEnum = (typeof opitemreceOrderByRelevanceFieldEnum)[keyof typeof opitemreceOrderByRelevanceFieldEnum]
 
 
-export const drugitemcodeOrderByRelevanceFieldEnum = {
+export const drugItemCodesOrderByRelevanceFieldEnum = {
+  icode: 'icode',
+  invcode: 'invcode',
+  type: 'type',
+  unit: 'unit'
+} as const
+
+export type drugItemCodesOrderByRelevanceFieldEnum = (typeof drugItemCodesOrderByRelevanceFieldEnum)[keyof typeof drugItemCodesOrderByRelevanceFieldEnum]
+
+
+export const drugItemStocksOrderByRelevanceFieldEnum = {
+  yearmonth: 'yearmonth'
+} as const
+
+export type drugItemStocksOrderByRelevanceFieldEnum = (typeof drugItemStocksOrderByRelevanceFieldEnum)[keyof typeof drugItemStocksOrderByRelevanceFieldEnum]
+
+
+export const transactionDrugRollbacksOrderByRelevanceFieldEnum = {
+  hos_guid: 'hos_guid',
+  vn: 'vn',
+  hn: 'hn',
+  an: 'an',
   icode: 'icode',
   invcode: 'invcode',
   unit: 'unit'
 } as const
 
-export type drugitemcodeOrderByRelevanceFieldEnum = (typeof drugitemcodeOrderByRelevanceFieldEnum)[keyof typeof drugitemcodeOrderByRelevanceFieldEnum]
-
-
-export const carrydrugitemOrderByRelevanceFieldEnum = {
-  icode: 'icode',
-  invcode: 'invcode',
-  unit: 'unit',
-  yearmonth: 'yearmonth'
-} as const
-
-export type carrydrugitemOrderByRelevanceFieldEnum = (typeof carrydrugitemOrderByRelevanceFieldEnum)[keyof typeof carrydrugitemOrderByRelevanceFieldEnum]
-
-
-export const importdrugitemOrderByRelevanceFieldEnum = {
-  icode: 'icode',
-  invcode: 'invcode',
-  unit: 'unit',
-  yearmonth: 'yearmonth'
-} as const
-
-export type importdrugitemOrderByRelevanceFieldEnum = (typeof importdrugitemOrderByRelevanceFieldEnum)[keyof typeof importdrugitemOrderByRelevanceFieldEnum]
-
-
-export const exportdrugitemOrderByRelevanceFieldEnum = {
-  icode: 'icode',
-  invcode: 'invcode',
-  unit: 'unit',
-  yearmonth: 'yearmonth'
-} as const
-
-export type exportdrugitemOrderByRelevanceFieldEnum = (typeof exportdrugitemOrderByRelevanceFieldEnum)[keyof typeof exportdrugitemOrderByRelevanceFieldEnum]
-
-
-export const balanceOrderByRelevanceFieldEnum = {
-  icode: 'icode',
-  invcode: 'invcode',
-  unit: 'unit',
-  yearmonth: 'yearmonth'
-} as const
-
-export type balanceOrderByRelevanceFieldEnum = (typeof balanceOrderByRelevanceFieldEnum)[keyof typeof balanceOrderByRelevanceFieldEnum]
+export type transactionDrugRollbacksOrderByRelevanceFieldEnum = (typeof transactionDrugRollbacksOrderByRelevanceFieldEnum)[keyof typeof transactionDrugRollbacksOrderByRelevanceFieldEnum]
 

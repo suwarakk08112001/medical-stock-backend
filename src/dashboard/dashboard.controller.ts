@@ -7,9 +7,24 @@ import { SearchDashboardDto } from './dto/search-dashboard.dto';
 export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
 
-  @Get('totalDrug')
-  findTotalDrug() {
-    return this.dashboardService.findTotalDrug();
+  @Get('totalDrugHOSxP')
+  findTotalDrugHOSxP() {
+    return this.dashboardService.findTotalDrugHOSxP();
+  }
+
+  @Get('totalDrugHOSxP_PCU')
+  findTotalDrugHOSxP_PCU() {
+    return this.dashboardService.findTotalDrugHOSxP_PCU();
+  }
+
+  @Get('totalStockOutTodayHOSxP')
+  findTotalStockOutTodayHOSxP() {
+    return this.dashboardService.findTotalStockOutTodayHOSxP();
+  }
+
+  @Get('totalStockOutTodayHOSxP_PCU')
+  findTotalStockOutTodayHOSxP_PCU() {
+    return this.dashboardService.findTotalStockOutTodayHOSxP_PCU();
   }
 
   @Get('tbvalue')
@@ -40,6 +55,12 @@ export class DashboardController {
   @Get('Rvaluemonthly')
   findRvalueMonthly(@Query() dto: SearchDashboardDto) {
     return this.dashboardService.findRvalueMonthly(dto);
+  }
+
+
+  @Get('MonthlyMedicineStock')
+  findMonthlyMedicineStock(@Query() dto:SearchDashboardDto){
+    return this.dashboardService.findMonthlyMedicineStock(dto);
   }
 
   @Get()
