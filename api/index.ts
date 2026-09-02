@@ -2,9 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import express from 'express';
 import { configure as serverlessExpress } from '@vendia/serverless-express';
-import { AppModule } from 'src/app.module';
-import type {VercelRequest, VercelResponse} from '@vercel/node'
-// import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { AppModule } from '../src/app.module';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 let server: any;
 
